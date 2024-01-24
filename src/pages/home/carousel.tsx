@@ -8,22 +8,22 @@ export const CarouselSection: React.FC = () => {
   return (
     <section>
       <Carousel
-        autoplay
-        fade
         afterChange={() => {
           setAnimate(false)
         }}
         beforeChange={() => {
           setAnimate(true)
         }}
+        autoplay
+        fade
       >
         <div className='relative'>
           <CarouselImageTitle animate={animate} />
-          <img src='/home/calibracion.jpg' />
+          <img src='/home/calibracion.jpg' className='w-full max-h-[28rem] xl:max-h-[40rem] object-cover' />
         </div>
         <div className='relative'>
           <CarouselImageTitle animate={animate} title='Mantenimiento' />
-          <img src='/home/mantenimiento.jpg' />
+          <img src='/home/mantenimiento.jpg' className='w-full max-h-[28rem] xl:max-h-[40rem] object-cover' />
         </div>
       </Carousel>
     </section>

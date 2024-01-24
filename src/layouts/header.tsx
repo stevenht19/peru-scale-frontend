@@ -1,21 +1,23 @@
 import { Dropdown, MenuProps, Divider } from 'antd'
+import { Routes } from 'consts/routes';
+import { Link } from 'react-router-dom'
 
 export function Header() {
   const items: MenuProps['items'] = [
     {
       key: '1',
       label: (
-        <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
+        <Link to={Routes.SINGIN}>
           Iniciar Sesión
-        </a>
+        </Link>
       ),
     },
     {
       key: '2',
       label: (
-        <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
+        <Link to={Routes.SIGNUP}>
           Registrate
-        </a>
+        </Link>
       ),
     },
     {
@@ -30,11 +32,11 @@ export function Header() {
 
 
   return (
-    <header className='border-b'>
+    <header className='border-b px-4'>
       <nav className='flex justify-between items-center'>
-        <div>
+        <Link to={Routes.HOME}>
           <img src='/logo.png' alt='Logo de la empresa Peru Scale' width={205} height={46} />
-        </div>
+        </Link>
         <div className='flex items-center gap-3'>
           <Dropdown
             menu={{ items }}
@@ -49,6 +51,9 @@ export function Header() {
             </span>
           </Dropdown>
           <Divider type={'vertical'} style={{ height: 30 }} />
+          <span>Productos</span>
+          <Divider type={'vertical'} style={{ height: 30 }} />
+          <span>Servicios</span>
         </div>
       </nav>
     </header>
