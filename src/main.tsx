@@ -9,6 +9,7 @@ import './index.css'
 import Home from 'pages/home/home'
 import Login from 'pages/login/login'
 import Signup from 'pages/signup/signup'
+import { UserSessionProvider } from 'context/user.context'
 
 const router = createBrowserRouter([
   {
@@ -16,7 +17,7 @@ const router = createBrowserRouter([
     element: <Home />,
   },
   {
-    path: Routes.SINGIN,
+    path: Routes.SIGNIN,
     element: <Login />
   },
   {
@@ -27,6 +28,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <UserSessionProvider>
+      <RouterProvider router={router} />
+    </UserSessionProvider>
   </React.StrictMode>
 )
