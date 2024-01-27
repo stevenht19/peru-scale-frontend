@@ -12,8 +12,20 @@ export class AuthService {
   }
 
   async login(credentials: UserCredentials) {
-    const res = await api(HttpMethod.POST, '/login', credentials)
-    setToken(res.token)
+    try {
+      const res = await api(HttpMethod.POST, '/login', credentials)
+
+      if (res.message) {
+        throw new Error(res.message)
+      }
+      
+      res.token && setToken(res.token)
+      return res
+    } catch(err) {
+      if (typeof err === 'string') {
+        throw new Error(err)
+      }
+    }
   }
 
   async signup(user: User) {

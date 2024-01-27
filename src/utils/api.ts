@@ -25,9 +25,12 @@ export const api = async (method: HttpMethod, path: string, body: unknown) => {
 
   try {
     const response = await fetch(url, options)
-    console.log(response)
     const data = await response.json()
-    console.log(data)
+
+    if (data.message) {
+      throw new Error(data.message)
+    }
+
     return data
   } catch (error) {
     console.error('Error making API request:', error)

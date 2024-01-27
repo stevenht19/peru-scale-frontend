@@ -5,11 +5,13 @@ import {
   RouterProvider
 } from 'react-router-dom'
 import { Routes } from 'consts/routes.ts'
-import './index.css'
+import { UserSessionProvider } from 'context/user.context'
+import { AuthClientGuard } from 'hocs/auth'
 import Home from 'pages/home/home'
 import Login from 'pages/login/login'
 import Signup from 'pages/signup/signup'
-import { UserSessionProvider } from 'context/user.context'
+import './index.css'
+import ConfigProvider from 'context/config.context'
 
 const router = createBrowserRouter([
   {
@@ -18,18 +20,28 @@ const router = createBrowserRouter([
   },
   {
     path: Routes.SIGNIN,
-    element: <Login />
+    element: (
+      <AuthClientGuard>
+        <Login />
+      </AuthClientGuard>
+    )
   },
   {
     path: Routes.SIGNUP,
-    element: <Signup />
+    element: (
+      <AuthClientGuard>
+        <Signup />
+      </AuthClientGuard>
+    )
   },
 ])
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <UserSessionProvider>
-      <RouterProvider router={router} />
-    </UserSessionProvider>
+    <ConfigProvider>
+      <UserSessionProvider>
+        <RouterProvider router={router} />
+      </UserSessionProvider>
+    </ConfigProvider>
   </React.StrictMode>
 )
