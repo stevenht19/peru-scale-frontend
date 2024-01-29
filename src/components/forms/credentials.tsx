@@ -7,7 +7,8 @@ import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons'
 export const CrendentialsForm = ({
   onNext,
   onSubmit,
-  steps = false
+  children,
+  steps = false,
 }: CredentialFormProps) => {
 
   const onFinish = async (values: UserCredentials) => {
@@ -53,6 +54,7 @@ export const CrendentialsForm = ({
       >
         <Input.Password size='large' iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} />
       </Form.Item>
+      {children}
       <Button
         size='large'
         type='primary'

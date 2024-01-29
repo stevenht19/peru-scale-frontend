@@ -6,8 +6,8 @@ export class AuthService {
   _basePath = import.meta.env.BASE_URL
 
 
-  async getSession(token: string): Promise<User> {
-    const res = await api(HttpMethod.GET, '/account', token)
+  async getSession(): Promise<User> {
+    const res = await api(HttpMethod.GET, '/account')
     return res.user
   }
 
@@ -15,7 +15,7 @@ export class AuthService {
     try {
       const res = await api(HttpMethod.POST, '/login', credentials)
 
-      if (res.message) {
+      if (res.error) {
         throw new Error(res.message)
       }
       
@@ -31,6 +31,18 @@ export class AuthService {
   async signup(user: User) {
     const res = await api(HttpMethod.POST, '/register', user)
     setToken(res.token)
+  }
+
+  async recoverPasswordByEmail(email: UserCredentials['correo']) {
+    await api(HttpMethod.POST, '/recover-password', {
+      correo: email
+    })
+  }
+
+  async recoverPassword(password: string, token: string) {
+    await api(HttpMethod.POST, '/recover', {
+      password
+    }, token)
   }
 }
 

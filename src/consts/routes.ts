@@ -2,5 +2,6 @@ export const enum Routes {
   HOME = '/',
   AUTH = '/auth',
   SIGNUP = '/signup',
-  SIGNIN = '/signin'
+  SIGNIN = '/signin',
+  RECOVER = '/recover'
 } 
