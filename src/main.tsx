@@ -14,6 +14,8 @@ import Products from 'pages/products/products'
 import ConfigProvider from 'context/config.context'
 import RecoverPassword from 'pages/recover/recover-password'
 import './index.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const router = createBrowserRouter([
   {
