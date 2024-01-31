@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ProductCard from '../../components/forms/ProductCard'; 
+import ProductCard from '../../components/forms/ProductCard';
 import './Products.css';
 
 const Products = () => {
@@ -39,24 +39,36 @@ const Products = () => {
   if (error) return <div className="alert alert-danger" role="alert">Error: {error.message}</div>;
 
   return (
-    <div className="container mt-4">
+    <div className="container-fluid mt-4">
       <div className="row">
         <div className="col-md-3">
-          <div className="list-group">
+          <div className="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             {categories.map(category => (
-              <button type="button" key={category.idcategoria}
-                className={`list-group-item list-group-item-action ${selectedCategory && selectedCategory.idcategoria === category.idcategoria ? "active" : ""}`}
-                onClick={() => setSelectedCategory(category)}>
+              <a className={`nav-link ${selectedCategory && selectedCategory.idcategoria === category.idcategoria ? "active" : ""}`}
+                 key={category.idcategoria}
+                 onClick={() => setSelectedCategory(category)}>
                 {category.nombrecategoria}
-              </button>
+              </a>
             ))}
           </div>
         </div>
         <div className="col-md-9">
-          <h2>{selectedCategory ? selectedCategory.nombrecategoria : 'Seleccione una categoría'}</h2>
-          <div className="row row-cols-1 row-cols-md-3 g-4">
+          <h2 className="my-4">{selectedCategory ? selectedCategory.nombrecategoria : 'Seleccione una categoría'}</h2>
+          <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
             {products.map(product => (
-              <ProductCard key={product.id} product={product} />
+              <div key={product.id} className="col">
+                <div className="card h-100">
+                  <img src={product.imagen} className="card-img-top" alt={product.nombre} />
+                  <div className="card-body">
+                    <h5 className="card-title">{product.nombre}</h5>
+                    <p className="card-text">{product.descripcion}</p>
+                    <p className="card-text"><small className="text-muted">Stock: {product.stock}</small></p>
+                  </div>
+                  <div className="card-footer">
+                    <small className="text-primary">Precio: {product.precio}</small>
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         </div>

@@ -25,3 +25,17 @@
   line-height: 1.5; 
   font-size: 0.9em; 
 }
+btn-cotizacion {
+  background-color: red; /* Color de fondo rojo para el botón */
+  color: white; /* Color de texto blanco */
+  border: none; /* Sin bordes */
+  padding: 10px 20px; /* Padding horizontal y vertical para el botón */
+  border-radius: 4px; /* Bordes redondeados */
+  cursor: pointer; /* Estilo del cursor para indicar que es clickeable */
+  margin-top: 10px; /* Margen superior para separar del contenido de la tarjeta */
+  transition: background-color 0.3s; /* Transición suave para el color de fondo */
+}
+
+.btn-cotizacion:hover {
+  background-color: black; /* Color de fondo negro cuando se hace hover */
+}
