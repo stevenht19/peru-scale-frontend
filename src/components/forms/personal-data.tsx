@@ -1,17 +1,16 @@
-import { User } from 'models/User'
+import { User, UserCredentials } from 'models/User'
 import { CredentialFormProps } from './types'
 import { getRequiredRule } from 'utils/form'
 import { Button, Checkbox, Form, Input } from 'antd'
 import { useBoolean } from 'hooks/use-boolean'
 
 export const PersonalDataForm = ({ onSubmit }: CredentialFormProps) => {
-
   const [loading, setLoading] = useBoolean()
 
   const onFinish = (values: Partial<User>) => {
     setLoading.on()
 
-    onSubmit && onSubmit(values)
+    onSubmit && onSubmit(values as UserCredentials)
       .finally(setLoading.off)
   }
 

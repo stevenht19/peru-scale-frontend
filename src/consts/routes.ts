@@ -7,4 +7,5 @@ export const enum Routes {
   PRODUCTS = '/products',  //ruta para productos
   // PRODUCT_DETAILS = '/products/:productId'  //  ruta para detalles de productos (usando un parámetro)
 
+  RECOVER = '/recover'
 } 

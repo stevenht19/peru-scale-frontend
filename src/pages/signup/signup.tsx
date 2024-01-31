@@ -42,7 +42,7 @@ export default function Signup() {
     <AuthClientForm
       title={'Crea una cuenta'}
       linkText={'Inicia Sesión'}
-      linkMessage={'Ya tienes una cuenta?'}
+      linkMessage={`Ya tienes una cuenta?`}
       linkPath={Routes.SIGNIN}
     >
       <Steps
