@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import ProductCard from '../../components/forms/ProductCard'; 
-import './Products.css';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import ProductCard from '../../components/products/ProductCard'
+import './Products.css'
+import { Header } from 'layouts/header'
 
 const Products = () => {
-  const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [categories, setCategories] = useState<any[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<any>(null);
+  const [products, setProducts] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<any>(null);
 
   useEffect(() => {
     axios.get('http://localhost:3000/categorias')
@@ -38,7 +40,8 @@ const Products = () => {
   if (loading) return <div className="text-center"><span className="spinner-border text-primary" role="status"></span></div>;
   if (error) return <div className="alert alert-danger" role="alert">Error: {error.message}</div>;
 
-  return (
+  return <>
+    <Header />
     <div className="container mt-4">
       <div className="row">
         <div className="col-md-3">
@@ -62,7 +65,7 @@ const Products = () => {
         </div>
       </div>
     </div>
-  );
+  </>;
 };
 
 export default Products;
