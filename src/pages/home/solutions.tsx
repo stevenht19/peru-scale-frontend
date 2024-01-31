@@ -14,7 +14,7 @@ export const Solutions: React.FC = () => {
 }
 
 
-const Solution = ({ src = '', title='' }) => (
+const Solution = ({ src = '', title = '' }) => (
   <li className='border rounded-sm'>
     <figure>
       <img src={src}  className='rounded-t-md' />
