@@ -5,14 +5,17 @@ import {
   RouterProvider
 } from 'react-router-dom'
 import { Routes } from 'consts/routes.ts'
-import { UserSessionProvider } from 'context/user.context'
 import { AuthClientGuard } from 'hocs/auth'
 import Home from 'pages/home/home'
 import Login from 'pages/login/login'
 import Signup from 'pages/signup/signup'
+import { UserSessionProvider } from 'context/user.context'
+import Products from 'pages/products/products'
 import ConfigProvider from 'context/config.context'
 import RecoverPassword from 'pages/recover/recover-password'
 import './index.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const router = createBrowserRouter([
   {
@@ -35,6 +38,13 @@ const router = createBrowserRouter([
       </AuthClientGuard>
     )
   },
+
+  {
+    path: Routes.PRODUCTS,
+    element: <Products />
+  },
+
+
   {
     path: Routes.RECOVER,
     element: (
