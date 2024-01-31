@@ -3,6 +3,7 @@ import { Routes } from 'consts/routes';
 import { useSession } from 'hooks/use-session';
 import { Link } from 'react-router-dom'
 
+
 export function Header() {
   const { user } = useSession()
   console.log(user)
@@ -63,7 +64,7 @@ export function Header() {
             )
           }
           <Divider type={'vertical'} style={{ height: 30 }} />
-          <span>Productos</span>
+          <Link to={Routes.PRODUCTS}>Productos</Link>
           <Divider type={'vertical'} style={{ height: 30 }} />
           <span>Servicios</span>
         </div>

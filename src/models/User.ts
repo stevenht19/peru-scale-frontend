@@ -10,3 +10,4 @@ export interface User {
 }
 
 export type UserCredentials = Pick<User, 'correo' | 'password'>
+  
