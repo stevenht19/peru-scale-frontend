@@ -25,7 +25,7 @@
   line-height: 1.5; 
   font-size: 0.9em; 
 }
-btn-cotizacion {
+.product-card .btn-cotizacion {
   background-color: red; /* Color de fondo rojo para el botón */
   color: white; /* Color de texto blanco */
   border: none; /* Sin bordes */

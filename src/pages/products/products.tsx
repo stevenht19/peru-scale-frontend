@@ -1,17 +1,16 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useState } from 'react'
-import axios from 'axios'
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import ProductCard from '../../components/products/ProductCard'
-import './Products.css'
+import ProductCard from '../../components/products/ProductCard';
+import './Products.css';
 import { Header } from 'layouts/header'
 
 const Products = () => {
-  const [categories, setCategories] = useState<any[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<any>(null);
-  const [products, setProducts] = useState<any[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<any>(null);
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     axios.get('http://localhost:3000/categorias')
@@ -27,57 +26,56 @@ const Products = () => {
 
   useEffect(() => {
     if (selectedCategory) {
-      axios.get(`http://localhost:3000/productos?categoria=${selectedCategory.nombrecategoria}`)
+      setLoading(true);
+      axios.get(`http://localhost:3000/productos?categoria=${selectedCategory.id}`)
         .then(response => {
+          // Asegúrate de que response.data contiene solo los productos de la categoría seleccionada
           setProducts(response.data);
+          setLoading(false);
         })
         .catch(err => {
           setError(err);
+          setLoading(false);
         });
+    } else {
+      setProducts([]);
     }
   }, [selectedCategory]);
+  
 
   if (loading) return <div className="text-center"><span className="spinner-border text-primary" role="status"></span></div>;
   if (error) return <div className="alert alert-danger" role="alert">Error: {error.message}</div>;
 
-  return <>
-    <Header />
-    <div className="container mt-4">
-      <div className="row">
-        <div className="col-md-3">
-          <div className="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            {categories.map(category => (
-              <a className={`nav-link ${selectedCategory && selectedCategory.idcategoria === category.idcategoria ? "active" : ""}`}
-                 key={category.idcategoria}
-                 onClick={() => setSelectedCategory(category)}>
-                {category.nombrecategoria}
-              </a>
-            ))}
+  return (
+    <>
+      <Header />
+      <div className="container-fluid mt-4">
+        <div className="row">
+          <div className="col-md-3">
+            <div className="list-group">
+              {categories.map(category => (
+                <button
+                  key={category.id}
+                  className={`list-group-item list-group-item-action ${selectedCategory && selectedCategory.id === category.id ? "active" : ""}`}
+                  onClick={() => setSelectedCategory(category)}
+                >
+                  {category.nombrecategoria}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
-        <div className="col-md-9">
-          <h2 className="my-4">{selectedCategory ? selectedCategory.nombrecategoria : 'Seleccione una categoría'}</h2>
-          <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
-            {products.map(product => (
-              <div key={product.id} className="col">
-                <div className="card h-100">
-                  <img src={product.imagen} className="card-img-top" alt={product.nombre} />
-                  <div className="card-body">
-                    <h5 className="card-title">{product.nombre}</h5>
-                    <p className="card-text">{product.descripcion}</p>
-                    <p className="card-text"><small className="text-muted">Stock: {product.stock}</small></p>
-                  </div>
-                  <div className="card-footer">
-                    <small className="text-primary">Precio: {product.precio}</small>
-                  </div>
-                </div>
-              </div>
-            ))}
+          <div className="col-md-9">
+            <h2>{selectedCategory ? selectedCategory.nombrecategoria : 'Seleccione una categoría'}</h2>
+            <div className="row row-cols-1 row-cols-md-3 g-4">
+              {products.filter(product => product.categoria === selectedCategory.id).map(filteredProduct => (
+                <ProductCard key={filteredProduct.id} product={filteredProduct} />
+              ))}
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </>;
+    </>
+  );
 };
 
 export default Products;
