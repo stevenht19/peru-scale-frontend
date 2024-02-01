@@ -14,7 +14,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
   const handleCotizacionClick = () => {
     // Implementa la lógica para la solicitud de cotización aquí
-    alert(`Solicitar cotización para: ${product.nombre}`);
+    alert(`Ver detalles completos de: ${product.nombre}`);
   };
 
   return (
@@ -33,7 +33,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         className="btn-cotizacion" 
         onClick={handleCotizacionClick}
       >
-        Solicitar Cotización
+        Ver Producto
       </button>
     </div>
   );
