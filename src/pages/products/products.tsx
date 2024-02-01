@@ -1,79 +1,108 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.min.css'
-import ProductCard from '../../components/products/ProductCard';
-import './Products.css';
 import { Header } from 'layouts/header'
+import { useEffect, useState } from 'react'
+import { Category, Product } from 'models/Products'
+import { Link, useLocation } from 'react-router-dom'
+import { Routes } from 'consts/routes'
+import { Skeleton } from 'antd'
+import axios from 'axios'
+import ProductCard from 'components/products/ProductCard'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import './Products.css'
 
 const Products = () => {
-  const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [categories, setCategories] = useState<Category[]>([])
+  const [products, setProducts] = useState<Product[]>([])
+  const [loading, setLoading] = useState<boolean>(true)
+  const [error, setError] = useState<Error | null>(null)
+  const location = useLocation()
+
+  const category = location?.search.split('?category=')[1]
+  const decodedCategory = category && decodeURIComponent(category)
 
   useEffect(() => {
     axios.get('http://localhost:3000/categorias')
       .then(response => {
         setCategories(response.data);
-        setLoading(false);
+        setLoading(false)
       })
       .catch(err => {
         setError(err);
-        setLoading(false);
-      });
-  }, []);
+        setLoading(false)
+      })
+  }, [])
 
   useEffect(() => {
-    if (selectedCategory) {
-      setLoading(true);
-      axios.get(`http://localhost:3000/productos?categoria=${selectedCategory.id}`)
-        .then(response => {
-          // Asegúrate de que response.data contiene solo los productos de la categoría seleccionada
-          setProducts(response.data);
-          setLoading(false);
-        })
-        .catch(err => {
-          setError(err);
-          setLoading(false);
-        });
-    } else {
-      setProducts([]);
-    }
-  }, [selectedCategory]);
-  
+    if (!categories.length) return
 
-  if (loading) return <div className="text-center"><span className="spinner-border text-primary" role="status"></span></div>;
+    const getProducts = () => {
+      const categoryId = categories
+        ?.find(cat => cat?.nombrecategoria?.trim() === decodedCategory?.trim())?.idcategoria
+
+      if (!categoryId) {
+        axios.get('http://localhost:3000/productos')
+          .then((response) => {
+            setProducts(response.data)
+            setLoading(false)
+          })
+          .catch(err => {
+            setError(err);
+            setLoading(false)
+          })
+      } else {
+        axios
+          .get(`http://localhost:3000/categorias/${categoryId}/productos`)
+          .then(({ data }) => {
+            setProducts(data)
+            setLoading(false)
+          })
+          .catch(err => {
+            setError(err);
+            setLoading(false)
+          })
+      }
+    }
+
+    getProducts()
+
+
+  }, [categories.length, decodedCategory])
+
   if (error) return <div className="alert alert-danger" role="alert">Error: {error.message}</div>;
 
   return (
     <>
       <Header />
-      <div className="container-fluid mt-4">
+      <section className="overflow-hidden max-w-6xl mx-auto mt-1">
         <div className="row">
           <div className="col-md-3">
-            <div className="list-group">
-              {categories.map(category => (
-                <button
-                  key={category.id}
-                  className={`list-group-item list-group-item-action ${selectedCategory && selectedCategory.id === category.id ? "active" : ""}`}
-                  onClick={() => setSelectedCategory(category)}
+            <div className="list-group pt-3">
+              {categories.length && categories?.map(category => (
+                <Link
+                  key={category.idcategoria}
+                  className={`py-2.5 px-3 list-group-item-action`}
+                  to={`${Routes.PRODUCTS}?category=${category?.nombrecategoria}`}
                 >
                   {category.nombrecategoria}
-                </button>
+                </Link>
               ))}
             </div>
           </div>
-          <div className="col-md-9">
-            <h2>{selectedCategory ? selectedCategory.nombrecategoria : 'Seleccione una categoría'}</h2>
-            <div className="row row-cols-1 row-cols-md-3 g-4">
-              {products.filter(product => product.categoria === selectedCategory.id).map(filteredProduct => (
-                <ProductCard key={filteredProduct.id} product={filteredProduct} />
-              ))}
-            </div>
+          <div className="col-md-9 p-4">
+            <h2 className='font-bold'>{decodedCategory ?? 'Todos los productos'}</h2>
+            {
+              <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {loading ? [1, 2, 3].map((n) => (
+                  <div className='w-full' key={n}>
+                    <Skeleton />
+                  </div>
+                )) : products.length ? products?.filter(product => product.nombre !== null).map(product => (
+                  <ProductCard key={product.id} product={product} />
+                )) : 'No hay productos para esta categoria'}
+              </div>
+            }
           </div>
         </div>
-      </div>
+      </section>
     </>
   );
 };
