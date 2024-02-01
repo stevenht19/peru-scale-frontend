@@ -11,6 +11,7 @@ import Login from 'pages/login/login'
 import Signup from 'pages/signup/signup'
 import { UserSessionProvider } from 'context/user.context'
 import Products from 'pages/products/products'
+import List from 'pages/pre quote list/list'
 import ConfigProvider from 'context/config.context'
 import RecoverPassword from 'pages/recover/recover-password'
 import './index.css'
@@ -54,7 +55,12 @@ const router = createBrowserRouter([
         <RecoverPassword />
       </AuthClientGuard>
     )
+  },
+  {
+    path: Routes.LIST,
+    element: <List />
   }
+  
 ])
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
