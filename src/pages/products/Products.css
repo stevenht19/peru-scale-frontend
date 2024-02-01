@@ -5,6 +5,10 @@
   margin-top: 20px;
 }
 
+.products-section {
+  height: calc(100vh - 75px);
+}
+
 /* Estilos para la columna de categorías */
 .col-md-3 {
   flex: 0 0 auto;
@@ -20,9 +24,7 @@
   border: none; /* Elimina los bordes si prefieres */
 }
 
-,
-.list-group-item.active {
-  background-color: #95ede4; /* Color de fondo al pasar el mouse y al estar activo */
+.list-group-item.active { /* Color de fondo al pasar el mouse y al estar activo */
   color: #333; /* Color de texto */
 }
 .list-group-item:hover {
@@ -64,7 +66,6 @@
 /* Estilos para las tarjetas de productos */
 .product-card {
   background-color: #fff;
-  border: 1px solid #ddd; 
   border-radius: 4px; 
   overflow: hidden; 
   margin-bottom: 20px; 

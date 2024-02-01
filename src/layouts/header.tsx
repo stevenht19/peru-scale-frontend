@@ -36,8 +36,8 @@ export function Header() {
 
 
   return (
-    <header className='border-b px-4'>
-      <nav className='flex justify-between items-center'>
+    <header className='border-b px-4 top-0 sticky bg-white z-30'>
+      <nav className='flex justify-between items-center max-w-6xl mx-auto'>
         <Link to={Routes.HOME}>
           <img src='/logo.png' alt='Logo de la empresa Peru Scale' width={205} height={46} />
         </Link>

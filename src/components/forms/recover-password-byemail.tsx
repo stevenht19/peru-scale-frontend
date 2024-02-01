@@ -1,11 +1,14 @@
 import { Form, Input, Modal } from 'antd'
 import { useBoolean } from 'hooks/use-boolean'
 import { UserCredentials } from 'models/User'
+import toast, { Toaster } from 'react-hot-toast'
 import { auth } from 'services/auth'
 
 type SubmitProps = {
   correo: UserCredentials['correo']
 }
+
+const notify = () => toast('Se solicito recuperar contraseña')
 
 export const RecoverPassword: React.FC = () => {
   const [open, setOpen] = useBoolean()
@@ -21,6 +24,7 @@ export const RecoverPassword: React.FC = () => {
     auth.recoverPasswordByEmail(values.correo)
       .finally(() => {
         setLoading.off()
+        notify()
         setOpen.off()
       })
   }
@@ -32,6 +36,7 @@ export const RecoverPassword: React.FC = () => {
           Olvidaste tu contraseña?
         </button>
       </div>
+      <Toaster />
       <Modal
         title='Recuperar Contraseña'
         open={open}
