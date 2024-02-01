@@ -15,6 +15,7 @@ import ConfigProvider from 'context/config.context'
 import RecoverPassword from 'pages/recover/recover-password'
 import './index.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ProductDetails from 'pages/products/[id]'
 
 
 const router = createBrowserRouter([
@@ -38,13 +39,14 @@ const router = createBrowserRouter([
       </AuthClientGuard>
     )
   },
-
   {
     path: Routes.PRODUCTS,
     element: <Products />
   },
-
-
+  {
+    path: Routes.PRODUCT_DETAILS,
+    element: <ProductDetails />
+  },
   {
     path: Routes.RECOVER,
     element: (

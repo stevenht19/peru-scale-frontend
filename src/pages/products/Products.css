@@ -5,6 +5,10 @@
   margin-top: 20px;
 }
 
+.products-section {
+  height: calc(100vh - 75px);
+}
+
 /* Estilos para la columna de categorías */
 .col-md-3 {
   flex: 0 0 auto;
@@ -20,10 +24,13 @@
   border: none; /* Elimina los bordes si prefieres */
 }
 
-.list-group-item:hover,
-.list-group-item.active {
-  background-color: #95ede4; /* Color de fondo al pasar el mouse y al estar activo */
+.list-group-item.active { /* Color de fondo al pasar el mouse y al estar activo */
   color: #333; /* Color de texto */
+}
+.list-group-item:hover {
+  background-color: #000000; /* Bootstrap rojo */
+  border-color: #dc3545; /* Bootstrap rojo */
+  color: white;
 }
 
 /* Estilos para la columna de productos */
@@ -59,7 +66,6 @@
 /* Estilos para las tarjetas de productos */
 .product-card {
   background-color: #fff;
-  border: 1px solid #ddd; 
   border-radius: 4px; 
   overflow: hidden; 
   margin-bottom: 20px; 
@@ -93,4 +99,18 @@
 
 .alert {
   margin-top: 20px; 
+}
+btn-cotizacion {
+  background-color: red; /* Color de fondo rojo para el botón */
+  color: white; /* Color de texto blanco */
+  border: none; /* Sin bordes */
+  padding: 10px 20px; /* Padding horizontal y vertical para el botón */
+  border-radius: 4px; /* Bordes redondeados */
+  cursor: pointer; /* Estilo del cursor para indicar que es clickeable */
+  margin-top: 10px; /* Margen superior para separar del contenido de la tarjeta */
+  transition: background-color 0.3s; /* Transición suave para el color de fondo */
+}
+
+.btn-cotizacion:hover {
+  background-color: black; /* Color de fondo negro cuando se hace hover */
 }

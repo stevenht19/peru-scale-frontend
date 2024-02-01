@@ -1,83 +1,110 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useState } from 'react'
-import axios from 'axios'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import ProductCard from '../../components/products/ProductCard'
-import './Products.css'
 import { Header } from 'layouts/header'
+import { useEffect, useState } from 'react'
+import { Category, Product } from 'models/Products'
+import { Link, useLocation } from 'react-router-dom'
+import { Routes } from 'consts/routes'
+import { Skeleton } from 'antd'
+import axios from 'axios'
+import ProductCard from 'components/products/ProductCard'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import './Products.css'
 
 const Products = () => {
-  const [categories, setCategories] = useState<any[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<any>(null);
-  const [products, setProducts] = useState<any[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<any>(null);
+  const [categories, setCategories] = useState<Category[]>([])
+  const [products, setProducts] = useState<Product[]>([])
+  const [loading, setLoading] = useState<boolean>(true)
+  const [error, setError] = useState<Error | null>(null)
+  const location = useLocation()
+
+  const category = location?.search.split('?category=')[1]
+  const decodedCategory = category && decodeURIComponent(category)
 
   useEffect(() => {
     axios.get('http://localhost:3000/categorias')
       .then(response => {
         setCategories(response.data);
-        setLoading(false);
+        setLoading(false)
       })
       .catch(err => {
         setError(err);
-        setLoading(false);
-      });
-  }, []);
+        setLoading(false)
+      })
+  }, [])
 
   useEffect(() => {
-    if (selectedCategory) {
-      axios.get(`http://localhost:3000/productos?categoria=${selectedCategory.nombrecategoria}`)
-        .then(response => {
-          setProducts(response.data);
-        })
-        .catch(err => {
-          setError(err);
-        });
-    }
-  }, [selectedCategory]);
+    if (!categories.length) return
 
-  if (loading) return <div className="text-center"><span className="spinner-border text-primary" role="status"></span></div>;
+    const getProducts = () => {
+      const categoryId = categories
+        ?.find(cat => cat?.nombrecategoria?.trim() === decodedCategory?.trim())?.idcategoria
+
+      if (!categoryId) {
+        axios.get('http://localhost:3000/productos')
+          .then((response) => {
+            setProducts(response.data)
+            setLoading(false)
+          })
+          .catch(err => {
+            setError(err);
+            setLoading(false)
+          })
+      } else {
+        axios
+          .get(`http://localhost:3000/categorias/${categoryId}/productos`)
+          .then(({ data }) => {
+            setProducts(data)
+            setLoading(false)
+          })
+          .catch(err => {
+            setError(err);
+            setLoading(false)
+          })
+      }
+    }
+
+    getProducts()
+
+
+  }, [categories.length, decodedCategory])
+
   if (error) return <div className="alert alert-danger" role="alert">Error: {error.message}</div>;
 
-  return <>
-    <Header />
-    <div className="container mt-4">
-      <div className="row">
-        <div className="col-md-3">
-          <div className="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            {categories.map(category => (
-              <a className={`nav-link ${selectedCategory && selectedCategory.idcategoria === category.idcategoria ? "active" : ""}`}
-                 key={category.idcategoria}
-                 onClick={() => setSelectedCategory(category)}>
-                {category.nombrecategoria}
-              </a>
-            ))}
+  return (
+    <>
+      <Header />
+      <section className="overflow-hidden max-w-6xl mx-auto mt-1">
+        <div className="row">
+          <div className="col-md-3">
+            <div className="list-group pt-3">
+              {categories.length && categories?.map(category => (
+                <Link
+                  key={category.idcategoria}
+                  className={`py-2.5 px-3 list-group-item-action`}
+                  to={`${Routes.PRODUCTS}?category=${category?.nombrecategoria}`}
+                >
+                  {category.nombrecategoria}
+                </Link>
+              ))}
+            </div>
           </div>
-        </div>
-        <div className="col-md-9">
-          <h2 className="my-4">{selectedCategory ? selectedCategory.nombrecategoria : 'Seleccione una categoría'}</h2>
-          <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
-            {products.map(product => (
-              <div key={product.id} className="col">
-                <div className="card h-100">
-                  <img src={product.imagen} className="card-img-top" alt={product.nombre} />
-                  <div className="card-body">
-                    <h5 className="card-title">{product.nombre}</h5>
-                    <p className="card-text">{product.descripcion}</p>
-                    <p className="card-text"><small className="text-muted">Stock: {product.stock}</small></p>
+          <div className="col-md-9 p-4">
+            <h2 className='font-bold'>{decodedCategory ?? 'Todos los productos'}</h2>
+            {
+              <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {loading ? [1, 2, 3].map((n) => (
+                  <div className='w-full' key={n}>
+                    <Skeleton />
                   </div>
-                  <div className="card-footer">
-                    <small className="text-primary">Precio: {product.precio}</small>
-                  </div>
-                </div>
+                )) : products.length ? products?.filter(product => product.nombre !== null).map(product => (
+                  <ProductCard key={product.id} product={product} />
+                )) : 'No hay productos para esta categoria'}
               </div>
-            ))}
+            }
           </div>
         </div>
-      </div>
-    </div>
-  </>;
+      </section>
+    </>
+  );
 };
 
 export default Products;
