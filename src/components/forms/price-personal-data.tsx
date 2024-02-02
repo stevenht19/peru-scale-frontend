@@ -27,7 +27,13 @@ export const PriceDataForm: React.FC<PriceDataFormProps> = ({ onSubmit }) => {
           <Form.Item
             label='Nombres y Apellidos'
             name={'nombres'}
-            rules={getRequiredRule()}
+            rules={[
+              ...getRequiredRule(),
+              {
+                pattern: /^[A-Za-z\s]+$/,
+                message: 'Solo se admiten letras en este campo',
+              },
+            ]}
             {...user && { initialValue: user.nombres! + ' ' + user.apellidos! }}
           >
             {user ? (
@@ -39,7 +45,13 @@ export const PriceDataForm: React.FC<PriceDataFormProps> = ({ onSubmit }) => {
           <Form.Item
             label='Correo electrónico'
             name={'correo'}
-            rules={getRequiredRule()}
+            rules={[
+              {
+                pattern: /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/,
+                message: 'Ingrese un correo electrónico válido',
+              },
+              ...getRequiredRule('Correo electrónico'),
+            ]}
             {...user && { initialValue: user.correo }}
           >
             {user ? (
@@ -84,7 +96,13 @@ export const PriceDataForm: React.FC<PriceDataFormProps> = ({ onSubmit }) => {
           </Form.Item>
           <Form.Item
             label='Telefono'
-            rules={getRequiredRule('Telefono')}
+            rules={[
+              ...getRequiredRule('Telefono'),
+              {
+                pattern: /^[0-9]{1,9}$/,
+                message: 'Ingrese un número de teléfono válido',
+              },
+            ]}
             {...user && { initialValue: user.telefono! }}
             name={'telefono'}
           >
@@ -95,7 +113,14 @@ export const PriceDataForm: React.FC<PriceDataFormProps> = ({ onSubmit }) => {
           </Form.Item>
           <Form.Item
             label='DNI'
-            rules={getRequiredRule('DNI')}
+            rules={[
+              ...getRequiredRule('DNI'),
+              {
+                pattern: /^[0-9]{8}$/,
+                message: 'Ingrese un DNI válido',
+              },
+            ]}
+
             {...user && { initialValue: user.dni! }}
             name={'dni'}
           >

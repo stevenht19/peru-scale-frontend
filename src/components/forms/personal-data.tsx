@@ -38,7 +38,13 @@ export const PersonalDataForm = ({ onSubmit }: CredentialFormProps) => {
       <Form.Item
         label='DNI'
         name={'dni'}
-        rules={getRequiredRule('DNI')}
+        rules={[
+          ...getRequiredRule('DNI'),
+          {
+            pattern: /^[0-9]{8}$/,
+            message: 'Ingrese un DNI válido',
+          },
+        ]}
       >
         <Input size='large' />
       </Form.Item>
@@ -51,7 +57,13 @@ export const PersonalDataForm = ({ onSubmit }: CredentialFormProps) => {
       </Form.Item>
       <Form.Item
         label='Telefono'
-        rules={getRequiredRule('Telefono')}
+        rules={[
+          ...getRequiredRule('Telefono'),
+          {
+            pattern: /^[0-9]{1,9}$/,
+            message: 'Ingrese un número de teléfono válido',
+          },
+        ]}
         name={'telefono'}
       >
         <Input size='large' />

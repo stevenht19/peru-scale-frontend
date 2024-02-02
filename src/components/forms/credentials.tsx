@@ -22,48 +22,51 @@ export const CrendentialsForm = ({
 
   return (
     <Form
-      layout='vertical'
-      className='mt-5'
-      requiredMark={false}
-      onFinish={onFinish}
-      noValidate
+    layout='vertical'
+    className='mt-5'
+    requiredMark={false}
+    onFinish={onFinish}
+    noValidate
+  >
+    <Form.Item
+      label='Email'
+      name={'correo'}
+      rules={[
+        {
+          pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+          message: 'Ingrese un email válido',
+        },
+        ...getRequiredRule('Email')
+      ]}
     >
-      <Form.Item
-        label='Email'
-        name={'correo'}
-        rules={[
-          {
-            pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-            message: 'Ingrese un email válido',
-          },
-          ...getRequiredRule('Email')
-        ]}
-      >
-        <Input size='large' />
-      </Form.Item>
-      <Form.Item
-        label='Password'
-        name={'password'}
-        rules={[
-          {
-            min: 5,
-            message: 'Password debe tener 5 letras como minimo'
-          },
-          ...getRequiredRule('Password')
-        ]}
-      >
-        <Input.Password size='large' iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} />
-      </Form.Item>
-      {children}
-      <Button
-        size='large'
-        type='primary'
-        className='w-full mt-4'
-        htmlType='submit'
-      >
-        {steps ? 'Siguiente' : 'Iniciar Sesión'}
-      </Button>
-    </Form>
-  )
-
-}
+      <Input size='large' />
+    </Form.Item>
+    <Form.Item
+      label='Password'
+      name={'password'}
+      rules={[
+        {
+          min: 5,
+          message: 'Password debe tener 5 letras como minimo'
+        },
+        {
+          pattern: /^(?=.*[A-Z])(?=.*\d)/,
+          message: 'Debe contener al menos 1 mayúscula y 1 número',
+        },
+        ...getRequiredRule('Password')
+      ]}
+    >
+      <Input.Password size='large' iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} />
+    </Form.Item>
+    {children}
+    <Button
+      size='large'
+      type='primary'
+      className='w-full mt-4'
+      htmlType='submit'
+    >
+      {steps ? 'Siguiente' : 'Iniciar Sesión'}
+    </Button>
+  </Form>
+)
+    }
