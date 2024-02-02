@@ -38,7 +38,21 @@ export function NewPasswordForm() {
       requiredMark={false}
       onFinish={onFinish}
     >
-      <Form.Item label="Password" name="password" rules={getRequiredRule('Este campo')}>
+      <Form.Item
+        label="Password"
+        name="password"
+        rules={[
+          {
+            min: 5,
+            message: 'Password debe tener 5 letras como minimo'
+          },
+          {
+            pattern: /^(?=.*[A-Z])(?=.*\d)/,
+            message: 'Debe contener al menos 1 mayúscula y 1 número',
+          },
+          ...getRequiredRule('Este campo')
+        ]}
+      >
         <Input size='large' />
       </Form.Item>
       <Form.Item
@@ -49,6 +63,14 @@ export function NewPasswordForm() {
           {
             required: true,
             message: 'Este campo es obligatorio'
+          },
+          {
+            min: 5,
+            message: 'Password debe tener 5 letras como minimo'
+          },
+          {
+            pattern: /^(?=.*[A-Z])(?=.*\d)/,
+            message: 'Debe contener al menos 1 mayúscula y 1 número',
           },
           ({ getFieldValue }) => ({
             validator(_, value) {
