@@ -90,7 +90,7 @@ export const PersonalDataForm = ({ onSubmit }: CredentialFormProps) => {
         className='w-full mt-4'
         htmlType='submit'
       >
-        {loading ? 'Ingrensado...' : 'Crear cuenta'}
+        {loading ? 'Ingresando...' : 'Crear cuenta'}
       </Button>
     </Form>
   )

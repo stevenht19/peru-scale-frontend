@@ -32,7 +32,7 @@ export const api = async (method: HttpMethod, path: string, body?: unknown, cust
 
     return data
   } catch (error) {
-    console.error('Error making API request:', error)
-    throw new Error('Failed to make API request.')
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    throw new Error(error! as any)
   }
 };

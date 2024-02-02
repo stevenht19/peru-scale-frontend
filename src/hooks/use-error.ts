@@ -7,9 +7,12 @@ export function useError() {
     setError(msg)
   }
 
+  const resetError = () => setError('')
+
   return {
     error,
     isError: Boolean(error.trim().length),
-    handleErrorMsg
+    handleErrorMsg,
+    resetError
   }
 }

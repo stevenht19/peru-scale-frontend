@@ -29,8 +29,19 @@ export class AuthService {
   }
 
   async signup(user: User) {
-    const res = await api(HttpMethod.POST, '/register', user)
-    setToken(res.token)
+    try {
+      const res = await api(HttpMethod.POST, '/register', user)
+
+      if (res.error) {
+        throw new Error(res.message)
+      }
+      setToken(res.token)
+      return res
+    } catch(err) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const error = err as any
+      throw new Error(error.message)
+    }
   }
 
   async recoverPasswordByEmail(email: UserCredentials['correo']) {
