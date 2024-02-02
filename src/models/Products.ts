@@ -14,3 +14,7 @@ export type Category = {
   idcategoria: number
   nombrecategoria: string
 }
+
+export interface PreQuotedProduct extends Product {
+  quantity: number
+}

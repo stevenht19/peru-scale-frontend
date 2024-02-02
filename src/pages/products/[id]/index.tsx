@@ -3,7 +3,7 @@ import { useProduct } from 'hooks/use-products'
 import { Header } from 'layouts/header'
 import { useParams } from 'react-router-dom'
 import { QuantitySelector } from './quantity-selector'
-import { Product } from 'models/Products'
+import { PreQuotedProduct, Product } from 'models/Products'
 import { useSession } from 'hooks/use-session'
 import { useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
@@ -51,14 +51,16 @@ const ProductInformation = ({ product }: ProductInformationProps) => {
   }
 
   const handleAddCotizationList = () => {
-    const productToSave = product
-    const productsList = (JSON.parse(localStorage.getItem('scale_products_list')!) ?? []) as Product[]
+    const productToSave = {
+      ...product,
+      quantity
+    }
+    const productsList = (JSON.parse(localStorage.getItem('scale_products_list')!) ?? []) as PreQuotedProduct[]
 
     if (!productsList?.some((product) => product.id === productToSave.id)) {
-      localStorage.setItem('scale_products_list', JSON.stringify(productsList.concat(product)))
+      localStorage.setItem('scale_products_list', JSON.stringify(productsList.concat(productToSave)))
       notify()
     }
-    
   }
 
   return (

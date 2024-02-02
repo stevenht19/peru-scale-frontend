@@ -5,6 +5,7 @@ import { getToken } from 'utils/token'
 
 interface UserAuthenticationContextProps {
   user: User | null
+  loading: boolean
 }
 
 export const UserAuthenticationContext = createContext({} as UserAuthenticationContextProps)
@@ -13,16 +14,21 @@ export function UserSessionProvider({ children }: {
   children: React.ReactNode
 }) {
   const [user, setUser] = useState<User | null>(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const getSession = async () => {
       const token = getToken()
+      if (!token) {
+        setLoading(false)
+        return
+      }
 
-      if (!token) return
-
-      auth.getSession(token)
+      auth.getSession()
         .then((user) => {
           user && setUser(user)
+        }).finally(() => {
+          setLoading(false)
         })
     }
 
@@ -31,7 +37,8 @@ export function UserSessionProvider({ children }: {
 
   return (
     <UserAuthenticationContext.Provider value={{
-      user
+      user,
+      loading
     }}>
       {children}
     </UserAuthenticationContext.Provider>
