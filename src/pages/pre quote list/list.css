@@ -1,0 +1,10 @@
+/* List.css */
+.card-img-top {
+    height: 200px; /* Ajusta la altura según necesites */
+    object-fit: cover; /* Para que la imagen cubra el área asignada */
+  }
+  
+  .card-title {
+    min-height: 50px; /* Para que todas las tarjetas tengan la misma altura de título */
+  }
+  
