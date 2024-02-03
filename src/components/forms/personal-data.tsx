@@ -44,6 +44,10 @@ export const PersonalDataForm = ({ onSubmit }: CredentialFormProps) => {
             pattern: /^[0-9]{8}$/,
             message: 'Ingrese un DNI válido',
           },
+          {
+            max: 8,
+            message: ''
+          }
         ]}
       >
         <Input size='large' />
@@ -58,11 +62,11 @@ export const PersonalDataForm = ({ onSubmit }: CredentialFormProps) => {
       <Form.Item
         label='Telefono'
         rules={[
-          ...getRequiredRule('Telefono'),
           {
-            pattern: /^[0-9]{1,9}$/,
+            min: 9,
             message: 'Ingrese un número de teléfono válido',
           },
+          ...getRequiredRule('Telefono'),
         ]}
         name={'telefono'}
       >
