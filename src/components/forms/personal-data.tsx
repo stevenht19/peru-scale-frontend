@@ -44,10 +44,6 @@ export const PersonalDataForm = ({ onSubmit }: CredentialFormProps) => {
             pattern: /^[0-9]{8}$/,
             message: 'Ingrese un DNI válido',
           },
-          {
-            max: 8,
-            message: ''
-          }
         ]}
       >
         <Input size='large' />
@@ -63,8 +59,8 @@ export const PersonalDataForm = ({ onSubmit }: CredentialFormProps) => {
         label='Telefono'
         rules={[
           {
-            min: 9,
-            message: 'Ingrese un número de teléfono válido',
+            pattern: /^[0-9]{1,9}$/,
+            message: 'El numero de telefono tiene que tener 9 digitos',
           },
           ...getRequiredRule('Telefono'),
         ]}
