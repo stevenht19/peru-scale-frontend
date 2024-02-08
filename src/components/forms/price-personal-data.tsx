@@ -1,24 +1,49 @@
-import { getRequiredRule } from 'utils/form';
-import { Button, Form, Input, Select } from 'antd';
-import { useSession } from 'hooks/use-session';
+import { getRequiredRule } from 'utils/form'
+import { Button, Form, Input, Select } from 'antd'
+import { useSession } from 'hooks/use-session'
+import { PreQuotedProduct } from 'models/Products'
+import { ServiceQuotationRequest } from 'models/Quotation'
+import { useForm } from 'antd/es/form/Form'
+import { useBoolean } from 'hooks/use-boolean'
+import { Service } from 'models/Services'
+import TextArea from 'antd/es/input/TextArea'
 
 interface PriceDataFormProps {
-  onSubmit: (formData: FormData) => void;
+  selectedProducts?: PreQuotedProduct[]
+  servicesForm?: boolean
+  services?: Service[]
+  onSubmit: (formData: ServiceQuotationRequest) => Promise<void>
 }
 
-export const PriceDataForm: React.FC<PriceDataFormProps> = ({ onSubmit }) => {
-  const { loading, user } = useSession()
+export const PriceDataForm: React.FC<PriceDataFormProps> = ({
+  selectedProducts,
+  servicesForm,
+  services,
+  onSubmit
+}) => {
 
-  const onFinish = (values: FormData) => {
-    onSubmit(values);
-  };
+  const { loading, user } = useSession()
+  const [submitting, setSubmitting] = useBoolean()
+  const [form] = useForm()
+
+  const onFinish = async (values: ServiceQuotationRequest) => {
+    setSubmitting.on()
+    await onSubmit(values)
+      .then(() => {
+        form.resetFields()
+      })
+      .finally(() => {
+        setSubmitting.off()
+      })
+  }
 
   if (loading) return null
 
   return (
     <Form
+      form={form}
       layout='vertical'
-      className='mt-3'
+      className='my-3'
       requiredMark={false}
       onFinish={onFinish}
     >
@@ -26,18 +51,21 @@ export const PriceDataForm: React.FC<PriceDataFormProps> = ({ onSubmit }) => {
         <div className='col-md-6'>
           <Form.Item
             label='Nombres y Apellidos'
-            name={'nombres'}
+            name={'cliente'}
             rules={[
               ...getRequiredRule(),
               {
-                pattern: /^[A-Za-z\s]+$/,
+                pattern: /^[A-Za-zÁáÉéÍíÓóÚúÜüÑñ\s]+$/,
                 message: 'Solo se admiten letras en este campo',
               },
             ]}
             {...user && { initialValue: user.nombres! + ' ' + user.apellidos! }}
           >
             {user ? (
-              <Input size='large' defaultValue={user.nombres! + ' ' + user.apellidos!} />
+              <Input
+                size='large'
+                defaultValue={user.nombres! + ' ' + user.apellidos!}
+              />
             ) : (
               <Input size='large' />
             )}
@@ -72,8 +100,45 @@ export const PriceDataForm: React.FC<PriceDataFormProps> = ({ onSubmit }) => {
               <Input size='large' />
             )}
           </Form.Item>
+          {Boolean(servicesForm) && (
+            <Form.Item
+              label='Modelo de Balanza'
+              name={'balanzaDescripcion'}
+              rules={[...getRequiredRule('Modelo de balanza')]}
+            >
+              <Input size='large' />
+            </Form.Item>
+          )
+          }
+          {servicesForm && (
+            <Form.Item
+              label='Descripcion del servicio'
+              name={'mensaje'}
+            >
+              <TextArea rows={4.5} style={{ resize: 'none' }} />
+            </Form.Item>
+          )}
         </div>
         <div className='col-md-6'>
+          {Boolean(servicesForm) && (
+            <Form.Item
+              label='Servicio'
+              name={'id_tipo_servicio'}
+              rules={[...getRequiredRule('Un Tipo de servicio')]}
+            >
+              <Select
+                placeholder='Seleccione un servicio'
+                size='large'
+                options={services?.map((service) => (
+                  {
+                    label: service.descripcion,
+                    value: service.id
+                  }
+                ))}
+              />
+            </Form.Item>
+          )
+          }
           <Form.Item
             label='Medio de Pago'
             name={'medioDePago'}
@@ -120,11 +185,15 @@ export const PriceDataForm: React.FC<PriceDataFormProps> = ({ onSubmit }) => {
                 message: 'Ingrese un DNI válido',
               },
             ]}
-
-            {...user && { initialValue: user.dni! }}
+            {...user && {
+              initialValue: user.dni!
+            }}
             name={'dni'}
           >
-            {user ? <Input size={'large'} defaultValue={user.dni!} /> : <Input size='large' />}
+            {user ?
+              <Input size={'large'} defaultValue={user.dni!} /> :
+              <Input size='large' />
+            }
           </Form.Item>
           <Form.Item
             label='Nombre de la Empresa'
@@ -133,13 +202,13 @@ export const PriceDataForm: React.FC<PriceDataFormProps> = ({ onSubmit }) => {
           >
             <Input size='large' />
           </Form.Item>
-
           <Button
             size='large'
             type='primary'
-            //loading={loading}
+            loading={submitting}
             className='w-full mt-2'
             htmlType='submit'
+            disabled={servicesForm ? false : !Boolean(selectedProducts?.length)}
           >
             Realizar solicitud
           </Button>

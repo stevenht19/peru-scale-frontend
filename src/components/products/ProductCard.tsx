@@ -23,7 +23,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           <h3 className='font-bold mt-2 text-xl text-gray-900'>{product.nombre}</h3>
           <p className='text-md text-gray-600 mt-2'>{product.descripcion}</p>
           <div className='flex justify-between items-center mt-2'>
-            <span className='block my-2 text-xl text-gray-800'>${product.precio.toFixed(2)}</span>
+            <span className='block my-2 text-xl text-gray-800'>${product.precio}</span>
           </div>
         </div>
       </div>

@@ -15,6 +15,8 @@ export default defineConfig({
       hooks: "/src/hooks",
       hocs: "/src/hocs",
       context: "/src/context",
+      adapters: "/src/adapters",
+      shared: "/src/shared",
     },
   }
 })

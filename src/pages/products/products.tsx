@@ -8,35 +8,26 @@ import axios from 'axios'
 import ProductCard from 'components/products/ProductCard'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './Products.css'
+import { useFetch } from 'hooks/use-fetch'
 
 const Products = () => {
-  const [categories, setCategories] = useState<Category[]>([])
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<Error | null>(null)
   const location = useLocation()
 
   const category = location?.search.split('?category=')[1]
+  
   const decodedCategory = category && decodeURIComponent(category)
 
-  useEffect(() => {
-    axios.get('http://localhost:3000/categorias')
-      .then(response => {
-        setCategories(response.data);
-        setLoading(false)
-      })
-      .catch(err => {
-        setError(err);
-        setLoading(false)
-      })
-  }, [])
+  const { data: categories } = useFetch<Category[]>('/categorias')
 
   useEffect(() => {
-    if (!categories.length) return
 
     const getProducts = () => {
       const categoryId = categories
-        ?.find(cat => cat?.nombrecategoria?.trim() === decodedCategory?.trim())?.idcategoria
+        ?.find(cat => cat?.nombrecategoria?.trim() === decodedCategory?.trim())
+        ?.idcategoria
 
       if (!categoryId) {
         axios.get('http://localhost:3000/productos')
@@ -65,7 +56,7 @@ const Products = () => {
     getProducts()
 
 
-  }, [categories.length, decodedCategory])
+  }, [categories?.length, decodedCategory])
 
   if (error) return <div className="alert alert-danger" role="alert">Error: {error.message}</div>;
 
@@ -76,7 +67,7 @@ const Products = () => {
         <div className="row">
           <div className="col-md-3">
             <div className="list-group pt-3">
-              {categories.length && categories?.map(category => (
+              {Boolean(categories?.length) && categories?.map(category => (
                 <Link
                   key={category.idcategoria}
                   className={`py-2.5 px-3 list-group-item-action`}
