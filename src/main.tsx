@@ -17,6 +17,8 @@ import RecoverPassword from 'pages/recover/recover-password'
 import './index.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ProductDetails from 'pages/products/[id]'
+import VerifyAccount from 'pages/signup/verify'
+import Services from 'pages/services/services'
 
 
 const router = createBrowserRouter([
@@ -41,6 +43,10 @@ const router = createBrowserRouter([
     )
   },
   {
+    path: Routes.VERIFY,
+    element: <VerifyAccount />
+  },
+  {
     path: Routes.PRODUCTS,
     element: <Products />
   },
@@ -59,8 +65,12 @@ const router = createBrowserRouter([
   {
     path: Routes.LIST,
     element: <List />
+  },
+  {
+    path: Routes.SERVICES,
+    element: <Services />
   }
-  
+
 ])
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

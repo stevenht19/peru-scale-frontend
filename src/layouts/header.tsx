@@ -63,9 +63,10 @@ export function Header() {
           <Divider type={'vertical'} style={{ height: 30 }} />
           <Link to={Routes.PRODUCTS}>Productos</Link>
           <Divider type={'vertical'} style={{ height: 30 }} />
-          <span>Servicios</span>
+          <Link to={Routes.SERVICES}>Servicios</Link>
           <Divider type={'vertical'} style={{ height: 30 }} />
           <Link to={Routes.LIST}>Lista pre-cotización</Link>
+          
 
         </div>
       </nav>

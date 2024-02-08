@@ -9,5 +9,7 @@ export const enum Routes {
 
   RECOVER = '/recover',
 
-  LIST = '/list' //lista pre cotizacion 
+  LIST = '/list', //lista pre cotizacion 
+  VERIFY = '/verify',
+  SERVICES = '/services'
 } 

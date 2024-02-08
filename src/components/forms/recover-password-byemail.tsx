@@ -1,7 +1,7 @@
 import { Form, Input, Modal } from 'antd'
 import { useBoolean } from 'hooks/use-boolean'
 import { UserCredentials } from 'models/User'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import { auth } from 'services/auth'
 
 type SubmitProps = {
@@ -36,7 +36,6 @@ export const RecoverPassword: React.FC = () => {
           Olvidaste tu contraseña?
         </button>
       </div>
-      <Toaster />
       <Modal
         title='Recuperar Contraseña'
         open={open}

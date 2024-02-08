@@ -17,7 +17,7 @@ export const PersonalDataForm = ({ onSubmit }: CredentialFormProps) => {
   return (
     <Form
       layout='vertical'
-      className='mt-5'
+      className='mt-4'
       requiredMark={false}
       onFinish={onFinish}
     >
@@ -74,23 +74,24 @@ export const PersonalDataForm = ({ onSubmit }: CredentialFormProps) => {
         rules={[
           {
             validator: (_, value) =>
-              value ? Promise.resolve() : Promise.reject(new Error('Debe aceptar que la información es verdadera')),
+              value ? 
+              Promise.resolve() :
+              Promise.reject(new Error('Debe aceptar que la información es verdadera')),
           },
         ]}
       >
-        <Checkbox
-          style={{ lineHeight: '32px' }}
-        >
+        <Checkbox style={{ lineHeight: '32px' }}>
           Acepto que la información proporcionada es verdadera y exacta.
         </Checkbox>
       </Form.Item>
       <Button
         size='large'
         loading={loading}
+        type='primary'
         className='w-full mt-4'
         htmlType='submit'
       >
-        {loading ? 'Ingresando...' : 'Crear cuenta'}
+        {loading ? 'Ingresando...' : 'Verificar Cuenta'}
       </Button>
     </Form>
   )
