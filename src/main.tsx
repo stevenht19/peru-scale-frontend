@@ -17,6 +17,9 @@ import RecoverPassword from 'pages/recover/recover-password'
 import './index.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ProductDetails from 'pages/products/[id]'
+import UserManagement from 'pages/users_management/users_management'
+
+
 
 
 const router = createBrowserRouter([
@@ -59,6 +62,12 @@ const router = createBrowserRouter([
   {
     path: Routes.LIST,
     element: <List />
+  },
+
+
+  {
+    path: Routes.ADMIN_USER,
+    element: <UserManagement/>
   }
   
 ])

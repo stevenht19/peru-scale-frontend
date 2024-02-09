@@ -1,11 +1,13 @@
 import { Dropdown, MenuProps, Divider } from 'antd'
 import { Routes } from 'consts/routes';
 import { useSession } from 'hooks/use-session';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+// import from ./models/users_management.ts
 
 
 export function Header() {
   const { user } = useSession()
+
 
   const items: MenuProps['items'] = [
     {
@@ -32,6 +34,9 @@ export function Header() {
         </a>
       ),
     },
+
+
+    
   ];
 
 
@@ -66,6 +71,8 @@ export function Header() {
           <span>Servicios</span>
           <Divider type={'vertical'} style={{ height: 30 }} />
           <Link to={Routes.LIST}>Lista pre-cotización</Link>
+          <Divider type={'vertical'} style={{ height: 30 }} />
+          <Link to={Routes.ADMIN_USER}>Administracion usuarios</Link>
 
         </div>
       </nav>
