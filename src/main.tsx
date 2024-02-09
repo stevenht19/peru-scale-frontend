@@ -19,6 +19,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ProductDetails from 'pages/products/[id]'
 import VerifyAccount from 'pages/signup/verify'
 import Services from 'pages/services/services'
+import { EditAccount } from 'pages/profile/edit-profile'
 
 
 const router = createBrowserRouter([
@@ -69,6 +70,10 @@ const router = createBrowserRouter([
   {
     path: Routes.SERVICES,
     element: <Services />
+  },
+  {
+    path: Routes.EDITACCOUNT,
+    element: <EditAccount />
   }
 
 ])

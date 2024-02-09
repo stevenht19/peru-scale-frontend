@@ -3,6 +3,9 @@ export const enum Routes {
   AUTH = '/auth',
   SIGNUP = '/signup',
   SIGNIN = '/signin',
+  LOGOUT = '/logout',
+
+  EDITACCOUNT = '/edit',
 
   PRODUCTS = '/products',  //ruta para productos
   PRODUCT_DETAILS = '/products/:id',  //  ruta para detalles de productos (usando un parámetro)

@@ -11,7 +11,7 @@ export function useError() {
 
   return {
     error,
-    isError: Boolean(error.trim().length),
+    isError: Boolean(error.trim()),
     handleErrorMsg,
     resetError
   }
