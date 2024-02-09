@@ -12,7 +12,7 @@ interface UserProps {
   nombre_rol: string;
 }
 
-const UserRow: React.FC<{ user: UserProps }> = ({ user }) => {
+export const UserRow: React.FC<{ user: UserProps }> = ({ user }) => {
   // Desestructuración de las propiedades del usuario para un acceso más fácil
   const { id, correo, nombre_completo, direccion, telefono, dni, estado, nombre_rol } = user;
 
@@ -31,4 +31,3 @@ const UserRow: React.FC<{ user: UserProps }> = ({ user }) => {
   );
 };
 
-export default UserRow;

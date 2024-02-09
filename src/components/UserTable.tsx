@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SearchBar } from './SearchBar';
 import { UserRow } from './UserRow';
 import { fetchUsers } from '../services/userService'; // Asegúrate de que esta importación sea correcta
+import { Table } from 'antd';
 
 type User = {
   id: number;
@@ -17,7 +18,6 @@ type User = {
 export const UserTable = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
-  const [searchTerm, setSearchTerm] = useState(''); // Estado para el término de búsqueda
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -36,7 +36,6 @@ export const UserTable = () => {
   }, []);
 
   const handleSearch = (term: string) => {
-    setSearchTerm(term);
     const filtered = users.filter(user => 
       user.nombre_completo.toLowerCase().includes(term.toLowerCase()) // Asegúrate de que la propiedad sea correcta
     );
@@ -44,34 +43,6 @@ export const UserTable = () => {
   };
 
   return (
-    <div>
-      {loading ? (
-        <p>Cargando usuarios...</p>
-      ) : (
-        <>
-          <SearchBar onSearch={handleSearch} />
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Correo</th>
-                <th>Nombre Completo</th>
-                <th>Dirección</th>
-                <th>Teléfono</th>
-                <th>DNI</th>
-                <th>Estado</th>
-                <th>Rol</th>
-                {/* Añade o quita encabezados según sea necesario */}
-              </tr>
-            </thead>
-            <tbody>
-              {filteredUsers.map(user => (
-                <UserRow key={user.id} user={user} />
-              ))}
-            </tbody>
-          </table>
-        </>
-      )}
-    </div>
-  );
-};
+    <Table />
+  )
+}

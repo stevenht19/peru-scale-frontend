@@ -4,7 +4,7 @@ interface SearchBarProps {
   onSearch: (term: string) => void; // La función que se llamará cuando se busque
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
+export const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
   // Manejador para los cambios en el input
@@ -31,5 +31,3 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
     </form>
   );
 };
-
-export default SearchBar;
