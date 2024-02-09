@@ -1,0 +1,94 @@
+.user-admin-container {
+    font-family: 'Arial', sans-serif;
+    margin: 0 auto;
+    max-width: 1000px; /* Ajusta según el ancho deseado */
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra suave alrededor del contenedor */
+  }
+  
+  .user-admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .user-admin-title {
+    margin: 0;
+    font-size: 24px; /* Ajusta el tamaño del título */
+    color: #333; /* Color de texto para el título */
+  }
+  
+  .search-bar-container {
+    position: relative;
+  }
+  
+  .search-bar-input {
+    border: 1px solid #ccc;
+    padding: 8px 10px;
+    border-radius: 4px;
+    font-size: 16px; /* Tamaño de la fuente para el input de búsqueda */
+  }
+  
+  .search-bar-input::placeholder {
+    color: #888; /* Color para el placeholder del input de búsqueda */
+  }
+  
+  .user-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+  }
+  
+  .user-table th,
+  .user-table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd; /* Líneas separadoras de la tabla */
+  }
+  
+  .user-table th {
+    background-color: #f2f2f2; /* Fondo para los encabezados de la tabla */
+    color: #333; /* Color de texto para los encabezados */
+  }
+  
+  .user-table tr:hover {
+    background-color: #f9f9f9; /* Resaltado al pasar el mouse */
+  }
+  
+  .button-edit,
+  .button-delete {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-right: 5px;
+  }
+  
+  .button-edit {
+    background: #28a745; /* Color para botón de editar */
+  }
+  
+  .button-delete {
+    background: #dc3545; /* Color para botón de eliminar */
+  }
+  
+  .button-edit:hover,
+  .button-delete:hover {
+    opacity: 0.8;
+  }
+  
+  /* Ajustes adicionales para responsive design */
+  @media (max-width: 768px) {
+    .user-admin-container {
+      padding: 10px;
+    }
+  
+    .user-table th,
+    .user-table td {
+      padding: 8px;
+    }
+  }
+  

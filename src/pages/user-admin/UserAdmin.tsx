@@ -1,5 +1,5 @@
 import React from 'react';
-import { UserTable } from './components/UserTable';
+import { UserTable } from '../../components/UserTable';
 import './UserAdmin.css'; // Asume que has creado estilos específicos para esta página
 
 const UserAdmin = () => {

@@ -1,30 +1,34 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { Routes } from './consts/routes'; // Asegúrate de que la ruta de importación sea correcta
-import { AuthClientGuard } from './hocs/auth'; // Verifica las rutas de importación
-import Home from './pages/home/home';
-import Login from './pages/login/login';
-import Signup from './pages/signup/signup';
-import { UserSessionProvider } from './context/user.context'; // Verifica las rutas de importación
-import Products from './pages/products/products';
-import List from './pages/pre quote list/list';
-import ConfigProvider from './context/config.context'; // Verifica las rutas de importación
-import RecoverPassword from './pages/recover/recover-password';
-import './index.css';
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import {
+  createBrowserRouter,
+  RouterProvider
+} from 'react-router-dom'
+import { Routes } from 'consts/routes.ts'
+import { AuthClientGuard } from 'hocs/auth'
+import Home from 'pages/home/home'
+import Login from 'pages/login/login'
+import Signup from 'pages/signup/signup'
+import { UserSessionProvider } from 'context/user.context'
+import Products from 'pages/products/products'
+import List from 'pages/pre quote list/list'
+import ConfigProvider from 'context/config.context'
+import RecoverPassword from 'pages/recover/recover-password'
+import './index.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ProductDetails from './pages/products/[id]';
-import VerifyAccount from './pages/signup/verify';
-import Services from './pages/services/services';
-import UserAdmin from './pages/user-admin/UserAdmin'; // Verifica las rutas de importación
+import ProductDetails from 'pages/products/[id]'
+import VerifyAccount from 'pages/signup/verify'
+import Services from 'pages/services/services'
+import UserAdmin from 'pages/user-admin/UserAdmin';
 
-const router = createBrowserRouter([
+
+const router = createBrowserRouter([  
   {
-    path: Routes.HOME, // La ruta debe ser '/', si es que Routes.HOME así lo indica
+    path: Routes.HOME,
     element: <Home />,
   },
   {
-    path: Routes.SIGNIN, // La ruta debe ser '/signin', si es que Routes.SIGNIN así lo indica
+    path: Routes.SIGNIN,
     element: (
       <AuthClientGuard>
         <Login />
@@ -32,7 +36,7 @@ const router = createBrowserRouter([
     )
   },
   {
-    path: Routes.SIGNUP, // La ruta debe ser '/signup', si es que Routes.SIGNUP así lo indica
+    path: Routes.SIGNUP,
     element: (
       <AuthClientGuard>
         <Signup />
@@ -40,19 +44,19 @@ const router = createBrowserRouter([
     )
   },
   {
-    path: Routes.VERIFY, // La ruta debe ser '/verify', si es que Routes.VERIFY así lo indica
+    path: Routes.VERIFY,
     element: <VerifyAccount />
   },
   {
-    path: Routes.PRODUCTS, // La ruta debe ser '/products', si es que Routes.PRODUCTS así lo indica
+    path: Routes.PRODUCTS,
     element: <Products />
   },
   {
-    path: Routes.PRODUCT_DETAILS, // La ruta debe ser '/products/:id', si es que Routes.PRODUCT_DETAILS así lo indica
+    path: Routes.PRODUCT_DETAILS,
     element: <ProductDetails />
   },
   {
-    path: Routes.RECOVER, // La ruta debe ser '/recover', si es que Routes.RECOVER así lo indica
+    path: Routes.RECOVER,
     element: (
       <AuthClientGuard>
         <RecoverPassword />
@@ -60,18 +64,18 @@ const router = createBrowserRouter([
     )
   },
   {
-    path: Routes.LIST, // La ruta debe ser '/list', si es que Routes.LIST así lo indica
+    path: Routes.LIST,
     element: <List />
   },
   {
-    path: Routes.SERVICES, // La ruta debe ser '/services', si es que Routes.SERVICES así lo indica
+    path: Routes.SERVICES,
     element: <Services />
   },
-  {
-    path: Routes.USER_ADMIN, // La ruta debe ser '/admin/users', si es que Routes.USER_ADMIN así lo indica
+ {
+    path: Routes.USER_ADMIN, 
     element: <UserAdmin />
-  },
-  // ... Aquí puedes añadir más rutas según necesites ...
+  }
+
 ])
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -82,4 +86,4 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       </UserSessionProvider>
     </ConfigProvider>
   </React.StrictMode>
-);
+)
