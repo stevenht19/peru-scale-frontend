@@ -4,6 +4,8 @@ export const enum Routes {
   SIGNUP = '/signup',
   SIGNIN = '/signin',
 
+  USER_ADMIN = '/admin/users', // la ruta de administración de usuarios
+
   PRODUCTS = '/products',  //ruta para productos
   PRODUCT_DETAILS = '/products/:id',  //  ruta para detalles de productos (usando un parámetro)
 
