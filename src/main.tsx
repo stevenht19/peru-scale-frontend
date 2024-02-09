@@ -80,7 +80,7 @@ const router = createBrowserRouter([
       {
         path: Routes.USER_ADMIN,
         element: (
-          <UserGuard role={ROLES.ADMIN}>
+          <UserGuard role={ROLES.ADMIN} privateRoute>
             <UserManagement />
           </UserGuard>
         )
