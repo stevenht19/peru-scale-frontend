@@ -6,10 +6,7 @@ function users_management() {
     <>
     
     <Header />
-    <div className="container">
     <div>users_management</div>
-
-    </div>
     
     
     </>
