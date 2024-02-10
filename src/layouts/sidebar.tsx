@@ -1,17 +1,21 @@
+import { ROLES } from 'consts/roles'
 import { Routes } from 'consts/routes'
+import { UserGuard } from 'hocs/user-guard'
 import { Link } from 'react-router-dom'
 
 export const Sidebar: React.FC = () => {
   return (
     <aside className='w-[17rem] border-r h-screen sticky top-0'>
       <ul className='flex flex-col'>
-        <Link
-          className='p-3 flex gap-2 items-center'
-          to={`${Routes.DASHBOARD}/${Routes.USER_ADMIN}`}
-        >
-          <SolarShieldUserBold />
-          Usuarios
-        </Link>
+        <UserGuard role={ROLES.ADMIN} nullable>
+          <Link
+            className='p-3 flex gap-2 items-center'
+            to={`${Routes.DASHBOARD}/${Routes.USER_ADMIN}`}
+          >
+            <SolarShieldUserBold />
+            Usuarios
+          </Link>
+        </UserGuard>
       </ul>
     </aside>
   )

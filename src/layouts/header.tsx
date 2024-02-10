@@ -26,23 +26,12 @@ export function Header() {
         </Link>
       ),
     },
-    {
-      key: '3',
-      label: (
-        <Link to={Routes.EDITACCOUNT}>
-         Mi Cuenta
-      </Link>
-      ),
-    },
-
-
-    
   ];
 
-  const onClick = async () => {   
-   await auth.logout()
-   window.location.href = '/'
-  };
+  const onClick = async () => {
+    await auth.logout()
+    window.location.href = '/'
+  }
 
 
   return (
@@ -74,16 +63,22 @@ export function Header() {
           <Link to={Routes.PRODUCTS}>Productos</Link>
           {/* <Divider type={'vertical'} style={{ height: 30 }} />
           <Link to={Routes.SERVICES}>Servicios</Link> */}
-        
+
           {/* <Divider type={'vertical'} style={{ height: 30 }} />
           <Link to={Routes.ADMIN_USER}>Administracion usuarios</Link> */}
           <Divider type={'vertical'} style={{ height: 30 }} />
           <Link to={Routes.SERVICES}>Servicios</Link>
           <Divider type={'vertical'} style={{ height: 30 }} />
           <Link to={Routes.LIST}>Lista pre-cotización</Link>
-          <Divider type={'vertical'} style={{ height: 30 }} />
-          {user  ? (<button onClick={onClick}>  Cerrar Sesión</button>) : null}
-
+          {user ? (
+            <>
+              <Link to={Routes.EDITACCOUNT}>
+                Mi Cuenta
+              </Link>
+              <Divider type={'vertical'} style={{ height: 30 }} />
+              <button onClick={onClick}>  Cerrar Sesión</button>
+            </>
+          ) : null}
         </div>
       </nav>
     </header>
