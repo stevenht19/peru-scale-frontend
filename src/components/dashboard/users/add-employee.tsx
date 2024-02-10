@@ -17,6 +17,7 @@ export const AddEmployee: React.FC<AddEmployeeProps> = ({
   const onSubmit = async (user: CreateUser) => {
     try {
       await onCreateUser(user)
+      setOpen.off()
     } catch (e) {
       if (e instanceof Error)
         handleErrorMsg(e.message)
