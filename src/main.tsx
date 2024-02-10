@@ -77,7 +77,7 @@ const router = createBrowserRouter([
   {
     path: Routes.EDITACCOUNT,
     element: (
-      <UserGuard role={ROLES.CLIENT} privateRoute>
+      <UserGuard role={ROLES.CLIENT}>
         <EditAccount />
       </UserGuard>
     ),

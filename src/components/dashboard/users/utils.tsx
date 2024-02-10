@@ -48,6 +48,32 @@ export const columns: ColumnsType<GetUser> = [
     }
   },
 
+
+  {
+    title: 'Usu registro',
+    dataIndex: 'usuario_registro',
+    key: 5,
+    
+  },
+
+  {
+    title: 'Fecha de actualización',
+    dataIndex: 'fecha_actualizacion',
+    key: 5,
+    render(date) {
+      return dayjs(date).format('D MMMM YYYY, HH:mm:ss')
+    }
+  },
+
+
+  {
+    title: 'Usu actualización',
+    dataIndex: 'usuario_actualizacion',
+    key: 5,
+    
+  },
+
+  
   {
     title: 'Estado',
     dataIndex: 'estado',
