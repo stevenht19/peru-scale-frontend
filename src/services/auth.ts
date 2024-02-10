@@ -1,6 +1,6 @@
 import { User, UserCredentials } from 'models/User'
 import { HttpMethod, api } from 'utils/api'
-import { deleteAccessToken, deleteToken, getAccessToken, setToken } from 'utils/token'
+import { deleteToken, getAccessToken, setToken } from 'utils/token'
 
 export class AuthService {
   _basePath = import.meta.env.BASE_URL

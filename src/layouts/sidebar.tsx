@@ -1,3 +1,4 @@
+import { UserCard } from 'components/ui/user-card'
 import { ROLES } from 'consts/roles'
 import { Routes } from 'consts/routes'
 import { UserGuard } from 'hocs/user-guard'
@@ -6,7 +7,7 @@ import { Link } from 'react-router-dom'
 export const Sidebar: React.FC = () => {
   return (
     <aside className='w-[17rem] border-r h-screen sticky top-0'>
-      <ul className='flex flex-col'>
+      <ul className='flex flex-col h-full'>
         <UserGuard role={ROLES.ADMIN} nullable>
           <Link
             className='p-3 flex gap-2 items-center'
@@ -17,6 +18,7 @@ export const Sidebar: React.FC = () => {
           </Link>
         </UserGuard>
       </ul>
+      <UserCard />
     </aside>
   )
 }
