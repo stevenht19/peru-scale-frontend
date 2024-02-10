@@ -3,6 +3,11 @@ export const enum Routes {
   AUTH = '/auth',
   SIGNUP = '/signup',
   SIGNIN = '/signin',
+  LOGOUT = '/logout',
+
+  EDITACCOUNT = '/edit',
+
+  USER_ADMIN = 'admin/users', // la ruta de administración de usuarios
 
   USER_ADMIN = 'admin/users', // la ruta de administración de usuarios
 
