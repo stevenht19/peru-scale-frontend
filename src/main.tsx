@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom'
 import { Routes } from 'consts/routes.ts'
 import { AuthClientGuard } from 'hocs/auth'
+import { UserRootLayout } from 'layouts/user-root-layout'
 import Home from 'pages/home/home'
 import Login from 'pages/login/login'
 import Signup from 'pages/signup/signup'
@@ -20,7 +21,9 @@ import ProductDetails from 'pages/products/[id]'
 import VerifyAccount from 'pages/signup/verify'
 import Services from 'pages/services/services'
 import { EditAccount } from 'pages/profile/edit-profile'
-
+import UserManagement from 'pages/dashboard/users-management'
+import { UserGuard } from 'hocs/user-guard'
+import { ROLES } from 'consts/roles'
 
 const router = createBrowserRouter([
   {
@@ -73,8 +76,25 @@ const router = createBrowserRouter([
   },
   {
     path: Routes.EDITACCOUNT,
-    element: <EditAccount />
-  }
+    element: <EditAccount />,
+  },
+  {
+    path: `${Routes.DASHBOARD}`,
+    element: <UserRootLayout />,
+    children: [
+      {
+        path: Routes.USER_ADMIN,
+        element: (
+          <UserGuard role={ROLES.ADMIN} privateRoute>
+            <UserManagement />
+          </UserGuard>
+        )
+ // eslint-disable-next-line no-irregular-whitespace
+      }
+// eslint-disable-next-line no-irregular-whitespace
+    ]
+// eslint-disable-next-line no-irregular-whitespace
+  }
 
 ])
 

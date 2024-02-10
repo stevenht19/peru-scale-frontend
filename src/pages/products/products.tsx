@@ -3,16 +3,19 @@ import { useEffect, useState } from 'react'
 import { Category, Product } from 'models/Products'
 import { Link, useLocation } from 'react-router-dom'
 import { Routes } from 'consts/routes'
-import { Skeleton } from 'antd'
+import { Pagination, Skeleton } from 'antd'
 import axios from 'axios'
 import ProductCard from 'components/products/ProductCard'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './Products.css'
 import { useFetch } from 'hooks/use-fetch'
 
+const defaultPageSize = 6
+
 const Products = () => {
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState<boolean>(true)
+  const [page, setPage] = useState<number>(1)
   const [error, setError] = useState<Error | null>(null)
   const location = useLocation()
 
@@ -58,6 +61,10 @@ const Products = () => {
 
   }, [categories?.length, decodedCategory])
 
+  const onChangePage = (page: number) => {
+    setPage(page)
+  }
+
   if (error) return <div className="alert alert-danger" role="alert">Error: {error.message}</div>;
 
   return (
@@ -72,6 +79,7 @@ const Products = () => {
                   key={category.idcategoria}
                   className={`py-2.5 px-3 list-group-item-action`}
                   to={`${Routes.PRODUCTS}?category=${category?.nombrecategoria}`}
+                  onClick={() => setPage(1)}
                 >
                   {category.nombrecategoria}
                 </Link>
@@ -86,11 +94,24 @@ const Products = () => {
                   <div className='w-full' key={n}>
                     <Skeleton />
                   </div>
-                )) : products.length ? products?.filter(product => product.nombre !== null).map(product => (
-                  <ProductCard key={product.id} product={product} />
-                )) : 'No hay productos para esta categoria'}
+                )) : products.length ? (
+                  products?.filter(product => product.nombre !== null).map(product => (
+                    <ProductCard key={product.id} product={product} />
+                  )).slice((page === 1 ? 0 : defaultPageSize * (page - 1)), defaultPageSize * page)
+                ) : 'No hay productos para esta categoria'}
               </div>
             }
+            {Boolean(products.length) && (
+              <div className='flex justify-end'>
+                <Pagination
+                  total={products.length}
+                  onChange={onChangePage}
+                  showTotal={(total, range) => `${range[0]}-${range[1]} de ${total} Productos`}
+                  defaultPageSize={defaultPageSize}
+                  current={page}
+                />
+              </div>
+            )}
           </div>
         </div>
       </section>
