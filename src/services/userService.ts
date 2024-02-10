@@ -1,15 +1,32 @@
-import axios from 'axios';
-
-// Utiliza la dirección correcta de tu API.
-const API_URL = 'http://localhost:3000/admin/admin_usuarios';
+import { CreateUser, GetUser } from 'shared/user';
+import { HttpMethod, api } from 'utils/api';
 
 export const fetchUsers = async () => {
   try {
-    const response = await axios.get(API_URL);
-    // Accede a la propiedad data que es lo que devuelve tu API.
-    return response.data.data;
+    const response = await api(HttpMethod.GET, `/admin/admin_usuarios`)
+    return response.data;
   } catch (error) {
-    // Considera manejar el error o re-lanzarlo para que sea manejado en otra parte del código.
-    throw error;
+    throw error
   }
 };
+
+export const createUser = async (userToCreate: CreateUser) => {
+  try {
+    const response = await api(HttpMethod.POST, `/admin/admin_usuarios`, userToCreate)
+    return response?.user as GetUser
+  } catch(e) {
+    throw e
+  }
+}
+
+export const editUser = async (userToEdit: CreateUser) => {
+  try {
+    await api(
+      HttpMethod.PUT,
+      `/admin/admin_usuarios/${userToEdit.id}`,
+      userToEdit
+    )
+  } catch(e) {
+    throw e
+  }
+}

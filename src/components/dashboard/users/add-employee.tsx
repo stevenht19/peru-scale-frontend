@@ -1,24 +1,41 @@
-import { PlusOutlined } from '@ant-design/icons'
-import { Button, Modal } from 'antd'
+import { Button } from 'antd'
 import { useBoolean } from 'hooks/use-boolean'
-import { AddEmployeeForm } from './add-employee-form'
+import { EmployeeForm } from './employee-form'
+import { CreateUser } from 'shared/user'
+import { useError } from 'hooks/use-error'
 
-export const AddEmployee: React.FC = () => {
+type AddEmployeeProps = {
+  onCreateUser(user: CreateUser): Promise<void>
+}
+
+export const AddEmployee: React.FC<AddEmployeeProps> = ({
+  onCreateUser
+}) => {
   const [open, setOpen] = useBoolean()
+  const { handleErrorMsg, error, isError } = useError()
+
+  const onSubmit = async (user: CreateUser) => {
+    try {
+      await onCreateUser(user)
+    } catch (e) {
+      if (e instanceof Error)
+        handleErrorMsg(e.message)
+    }
+  }
 
   return (
     <>
-      <Button type='primary' icon={<PlusOutlined />} onClick={setOpen.on}>
+      <Button type='primary' onClick={setOpen.on}>
         Agregar Empleado
       </Button>
-      <Modal
+      <EmployeeForm
         title='Agregar un empleado'
-        open={open}
         onCancel={setOpen.off}
-        width={650}
-      >
-        <AddEmployeeForm />
-      </Modal>
+        open={open}
+        onFinish={onSubmit}
+        isError={isError}
+        error={error}
+      />
     </>
   )
 }

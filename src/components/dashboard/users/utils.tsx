@@ -1,19 +1,28 @@
 import { ColumnsType } from 'antd/es/table'
-import { ROLES, roleColors } from 'consts/roles'
+import { roleColors } from 'consts/roles'
 import { GetUser } from 'shared/user'
-import { Button, Tag } from 'antd'
+import { Tag } from 'antd'
+import { UsersTableProps } from './users-table'
+import { EditEmployee } from './edit-employee'
+import { Roles } from 'models/Roles'
 import 'dayjs/locale/es'
 import dayjs from 'dayjs'
 
 dayjs.locale('es')
 
-export const columns: ColumnsType<GetUser> = [
+type ColumnsProps = Partial<UsersTableProps> & {
+  roles: Roles[]
+}
+
+export const columns = ({ onEditUser, roles }: ColumnsProps): ColumnsType<GetUser> => [
   {
     title: 'Nombre Completo',
-    dataIndex: 'nombre_completo',
     fixed: true,
     key: 1,
-    width: 240
+    width: 240,
+    render(_, record) {
+      return `${record.nombres} ${record.apellidos}`
+    }
   },
   {
     title: 'Correo',
@@ -21,6 +30,19 @@ export const columns: ColumnsType<GetUser> = [
     key: 2,
     width: 240
 
+  },
+  {
+    title: 'Rol',
+    dataIndex: 'id_rol',
+    key: 4,
+    width: 100,
+    render(id_rol: number, record) {
+      return (
+        <Tag color={roleColors[record.nombre_rol]}>
+          {roles?.find(rol => rol.id_rol === id_rol)?.nombre}
+        </Tag>
+      )
+    }
   },
   {
     title: 'Dirección',
@@ -32,19 +54,6 @@ export const columns: ColumnsType<GetUser> = [
     title: 'Telefono',
     dataIndex: 'telefono',
     width: 240,
-  },
-  {
-    title: 'Rol',
-    dataIndex: 'nombre_rol',
-    key: 4,
-    width: 100,
-    render(rol: ROLES) {
-      return (
-        <Tag color={roleColors[rol]}>
-          {rol}
-        </Tag>
-      )
-    }
   },
   {
     title: 'Fecha de registro',
@@ -107,14 +116,8 @@ export const columns: ColumnsType<GetUser> = [
     key: 7,
     fixed: 'right',
     width: 100,
-    render(_) {
-      return (
-        <div>
-          <Button>
-            Editar
-          </Button>
-        </div>
-      )
+    render(_, record) {
+      return <EditEmployee user={record} onEditUser={onEditUser!} />
     }
   }
 ]
