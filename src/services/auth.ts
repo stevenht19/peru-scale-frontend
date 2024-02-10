@@ -1,6 +1,6 @@
 import { User, UserCredentials } from 'models/User'
 import { HttpMethod, api } from 'utils/api'
-import { getAccessToken, setToken } from 'utils/token'
+import { deleteAccessToken, deleteToken, getAccessToken, setToken } from 'utils/token'
 
 export class AuthService {
   _basePath = import.meta.env.BASE_URL
@@ -70,6 +70,18 @@ export class AuthService {
       password
     }, token)
   }
+  async logout() {
+    try {
+      deleteToken();
+    } catch (err) {
+      if (typeof err === 'string') {
+        throw new Error(err);
+      } else {
+        throw err; 
+      }
+    }
+  }
+  
 }
 
 const auth = new AuthService()

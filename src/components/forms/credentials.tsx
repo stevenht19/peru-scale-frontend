@@ -13,6 +13,7 @@ export const CrendentialsForm = ({
   children,
   submitText,
   withConfirmPassword = false,
+  
 }: CredentialFormProps) => {
   const { error, isError, handleErrorMsg, resetError } = useError()
   const [submitting, setIsSubmitting] = useBoolean()
@@ -42,6 +43,7 @@ export const CrendentialsForm = ({
       requiredMark={false}
       onFinish={onFinish}
       noValidate
+    
     >
       <Form.Item
         label='Email'

@@ -20,6 +20,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ProductDetails from 'pages/products/[id]'
 import VerifyAccount from 'pages/signup/verify'
 import Services from 'pages/services/services'
+import { EditAccount } from 'pages/profile/edit-profile'
 import UserManagement from 'pages/dashboard/users-management'
 import { UserGuard } from 'hocs/user-guard'
 import { ROLES } from 'consts/roles'
@@ -74,13 +75,17 @@ const router = createBrowserRouter([
     element: <Services />
   },
   {
+    path: Routes.EDITACCOUNT,
+    element: <EditAccount />,
+  },
+  {
     path: `${Routes.DASHBOARD}`,
     element: <UserRootLayout />,
     children: [
       {
         path: Routes.USER_ADMIN,
         element: (
-          <UserGuard role={ROLES.ADMIN}>
+          <UserGuard role={ROLES.ADMIN} privateRoute>
             <UserManagement />
           </UserGuard>
         )

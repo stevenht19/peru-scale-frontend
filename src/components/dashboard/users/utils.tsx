@@ -46,5 +46,23 @@ export const columns: ColumnsType<GetUser> = [
     render(date) {
       return dayjs(date).format('D MMMM YYYY, HH:mm:ss')
     }
+  },
+
+  {
+    title: 'Estado',
+    dataIndex: 'estado',
+    key: 6,
+    render(state) {
+      if (state === 'activo') {
+        return <Tag color='green'>
+        {state}
+      </Tag>
+      } 
+
+      return <Tag color='red'>
+        {state}
+      </Tag>
+    }
   }
+  
 ]

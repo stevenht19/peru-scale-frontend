@@ -2,7 +2,7 @@ import { Dropdown, MenuProps, Divider } from 'antd'
 import { Routes } from 'consts/routes';
 import { useSession } from 'hooks/use-session';
 import { Link } from 'react-router-dom';
-// import from ./models/users_management.ts
+import { auth } from 'services/auth'
 
 
 export function Header() {
@@ -29,15 +29,20 @@ export function Header() {
     {
       key: '3',
       label: (
-        <a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
-          Mi Cuenta
-        </a>
+        <Link to={Routes.EDITACCOUNT}>
+         Mi Cuenta
+      </Link>
       ),
     },
 
 
     
   ];
+
+  const onClick = async () => {   
+   await auth.logout()
+   window.location.href = '/'
+  };
 
 
   return (
@@ -76,7 +81,8 @@ export function Header() {
           <Link to={Routes.SERVICES}>Servicios</Link>
           <Divider type={'vertical'} style={{ height: 30 }} />
           <Link to={Routes.LIST}>Lista pre-cotización</Link>
-          
+          <Divider type={'vertical'} style={{ height: 30 }} />
+          {user  ? (<button onClick={onClick}>  Cerrar Sesión</button>) : null}
 
         </div>
       </nav>
