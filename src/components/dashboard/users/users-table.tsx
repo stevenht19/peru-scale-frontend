@@ -16,7 +16,10 @@ export const UsersTable: React.FC<UsersTableProps> = ({
       columns={columns}
       dataSource={users}
       loading={loading}
-      scroll={{ x: 1000 }}
+      scroll={{
+        x: 1600
+      }}
+      rowKey={(user) => user.id}
     />
   )
 }

@@ -11,7 +11,7 @@ interface UserAuthenticationContextProps {
 export const UserAuthenticationContext = createContext({} as UserAuthenticationContextProps)
 
 export function UserSessionProvider({ children }: {
-  children: React.ReactNode
+  children: React.ReactNode | null
 }) {
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
@@ -40,7 +40,9 @@ export function UserSessionProvider({ children }: {
       user,
       loading
     }}>
-      {children}
+      {
+        loading ? null : children
+      }
     </UserAuthenticationContext.Provider>
   )
 }

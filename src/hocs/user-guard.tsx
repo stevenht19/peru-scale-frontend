@@ -5,33 +5,41 @@ import { UnauthorizedPage } from 'pages/403'
 import { Navigate } from 'react-router-dom'
 
 type UserGuard = {
-  role: ROLES,
+  role?: ROLES[],
   privateRoute?: boolean
   nullable?: boolean
   children: React.ReactNode
+  customPath?: string
 }
 
 export const UserGuard: React.FC<UserGuard> = ({
   role,
   privateRoute,
   nullable,
+  customPath,
   children
 }) => {
   const { user } = useSession()
 
-  // SI EL USUARIO NO TIENE EL ROL DEL COMPONENTE QUE ME REDIRECCIONE A HGME
-  if ((user?.nombre_rol !== role) && privateRoute) {
-    return <Navigate to={Routes.HOME} />
+  if (user === null && privateRoute) {
+    return <Navigate to={customPath ?? Routes.HOME} />
   }
 
-  // SI EL USUARIO EL NULL O NO TIENE EL ROL, ENTONCES QUE ME DEVUELVA NULL
-  if ((user === null) && nullable || (user?.nombre_rol !== role) && nullable) {
-    return null
-  }
-  
+  if (user === null) return null
+
   // SI EL USUARIO TIENE EL ROL QUE LE HEMOS PASADO AL COMPONENTE
-  if (user?.nombre_rol === role) {
+  if (role?.includes(user!.nombre_rol)) {
     return children
+  }
+
+  // SI EL USUARIO NO TIENE EL ROL DEL COMPONENTE QUE ME REDIRECCIONE A H0ME
+  if (!(role?.includes(user!.nombre_rol)) && privateRoute) {
+    return <Navigate to={customPath ?? Routes.HOME} />
+  }
+
+  // SI EL USUARIO ES NULL O NO TIENE EL ROL, ENTONCES QUE ME DEVUELVA NULL
+  if ((user === null) && nullable || !role?.includes(user!.nombre_rol) && nullable) {
+    return null
   }
 
   // SI EL USUARIO NO TIENE EL ROL Y NO ES RUTA PRIVADA, ENTONCES MUESTRA UNAUTHORIZED

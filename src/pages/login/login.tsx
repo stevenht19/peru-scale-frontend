@@ -5,16 +5,20 @@ import { UserCredentials } from 'models/User'
 import { AuthClientForm } from 'components/forms/auth-form'
 import { CrendentialsForm } from 'components/forms/credentials'
 import { RecoverPassword } from 'components/forms/recover-password-byemail'
+import { ROLESID } from 'consts/roles'
 
 export default function Login() {
-
   const { error, isError, handleErrorMsg } = useError()
 
   const onSubmit = async (crendetials: UserCredentials) => {
     auth.login(crendetials)
       .then((res) => {
         if (!res.message) {
-          window.location.href = '/'
+          if (res.user.id_rol !== ROLESID.CLIENT) {
+            window.location.href = '/dashboard'
+          } else {
+            window.location.href = '/'
+          }
         }
       }).catch(() => {
         handleErrorMsg('Credenciales incorrectas')

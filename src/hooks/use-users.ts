@@ -4,10 +4,9 @@ import { useBoolean } from './use-boolean'
 
 export const useUsers = () => {
   const [users, setUsers] = useState([])
-  const [loading, setLoading] = useBoolean(false);
+  const [loading, setLoading] = useBoolean(true);
 
   useEffect(() => {
-    setLoading.on()
     fetchUsers()
       .then(data => {
         setUsers(data)
