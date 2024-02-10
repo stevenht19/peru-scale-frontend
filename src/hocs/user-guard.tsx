@@ -19,10 +19,12 @@ export const UserGuard: React.FC<UserGuard> = ({
 }) => {
   const { user } = useSession()
 
+  // SI EL USUARIO NO TIENE EL ROL DEL COMPONENTE QUE ME REDIRECCIONE A HGME
   if ((user?.nombre_rol !== role) && privateRoute) {
     return <Navigate to={Routes.HOME} />
   }
 
+  // SI EL USUARIO EL NULL O NO TIENE EL ROL, ENTONCES QUE ME DEVUELVA NULL
   if ((user === null) && nullable || (user?.nombre_rol !== role) && nullable) {
     return null
   }
