@@ -76,20 +76,31 @@ const router = createBrowserRouter([
   },
   {
     path: Routes.EDITACCOUNT,
+    loader: () => {
+      console.log('')
+      return null
+    },
     element: (
-      <UserGuard role={ROLES.CLIENT} privateRoute>
-        <EditAccount />
-      </UserGuard>
+      <EditAccount />
     ),
   },
   {
     path: `${Routes.DASHBOARD}`,
-    element: <UserRootLayout />,
+    element: (
+      <UserGuard
+        role={[ROLES.ADMIN, ROLES.SELLER]}
+        privateRoute
+      >
+        <UserRootLayout />
+      </UserGuard>
+    ),
     children: [
       {
         path: Routes.USER_ADMIN,
         element: (
-          <UserGuard role={ROLES.ADMIN} privateRoute>
+          <UserGuard
+            role={[ROLES.ADMIN]}
+          >
             <UserManagement />
           </UserGuard>
         )
@@ -101,10 +112,10 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <ConfigProvider>
-      <UserSessionProvider>
+    <UserSessionProvider>
+      <ConfigProvider>
         <RouterProvider router={router} />
-      </UserSessionProvider>
-    </ConfigProvider>
+      </ConfigProvider>
+    </UserSessionProvider>
   </React.StrictMode>
 )
