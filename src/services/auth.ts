@@ -1,6 +1,6 @@
 import { User, UserCredentials } from 'models/User'
 import { HttpMethod, api } from 'utils/api'
-import { setToken } from 'utils/token'
+import { getAccessToken, setToken } from 'utils/token'
 
 export class AuthService {
   _basePath = import.meta.env.BASE_URL
@@ -28,17 +28,32 @@ export class AuthService {
     }
   }
 
-  async signup(user: User) {
+  async signup(credentials: UserCredentials) {
     try {
-      const res = await api(HttpMethod.POST, '/register', user)
-
+      const res = await api(HttpMethod.POST, '/register', credentials, getAccessToken()!)
+      
       if (res.error) {
         throw new Error(res.message)
       }
-      setToken(res.token)
+
       return res
     } catch(err) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const error = err as any
+      throw new Error(error.message)
+    }
+  }
+
+  async verifyAccount(personalData: Partial<User>, verifyToken: string) {
+    try {
+      const res = await api(HttpMethod.POST, '/verify-account', personalData, verifyToken)
+      
+      if (res.error) {
+        throw new Error(res.message)
+      }
+
+      return res
+    } catch(err) {
       const error = err as any
       throw new Error(error.message)
     }
