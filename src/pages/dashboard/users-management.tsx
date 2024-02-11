@@ -3,6 +3,7 @@ import { UsersTable } from 'components/dashboard/users/users-table'
 import { Search } from 'components/dashboard/users/search'
 import { Filters } from 'components/dashboard/users/filters'
 import { AddEmployee } from 'components/dashboard/users/add-employee'
+import { RoleSelector } from 'components/dashboard/users/role-selector'
 
 export default function UserManagement() {
   const {
@@ -11,7 +12,8 @@ export default function UserManagement() {
     onCreateUser,
     onEditUser,
     handleSearch,
-    getUsers
+    getUsers,
+    handleFilterByRol
   } = useUsers()
 
   return (
@@ -20,16 +22,20 @@ export default function UserManagement() {
         Administración de Usuarios
       </h2>
       <Filters totalUsers={users.length}>
+        <RoleSelector
+          className='w-32'
+          onChange={handleFilterByRol}
+          defaultValue={0}
+          allowAll
+        />
         <Search onChange={handleSearch} />
         <AddEmployee onCreateUser={onCreateUser} />
       </Filters>
-      <div className='w-full'>
-        <UsersTable
-          users={getUsers()}
-          loading={loading}
-          onEditUser={onEditUser}
-        />
-      </div>
+      <UsersTable
+        users={getUsers()}
+        loading={loading}
+        onEditUser={onEditUser}
+      />
     </div>
   )
 }
