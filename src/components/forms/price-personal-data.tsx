@@ -108,14 +108,26 @@ export const PriceDataForm: React.FC<PriceDataFormProps> = ({
             >
               <Input size='large' />
             </Form.Item>
-          )
-          }
+          )}
+          {Boolean(servicesForm) && (
+            <Form.Item
+              label='Capacidad de balanza (KG)'
+              name={'capacidadBalanza'}
+              rules={[...getRequiredRule('Capacidad de Balanza')]}
+            >
+              <Input size='large' />
+            </Form.Item>
+          )}
           {servicesForm && (
             <Form.Item
               label='Descripcion del servicio'
               name={'mensaje'}
             >
-              <TextArea rows={4.5} style={{ resize: 'none' }} />
+              <TextArea
+                rows={4.5}
+                style={{ resize: 'none' }}
+                placeholder='Ejemplo: Tengo una balanza marca TScale de capacidad de 200 kg que necesita calibración urgente'
+              />
             </Form.Item>
           )}
         </div>

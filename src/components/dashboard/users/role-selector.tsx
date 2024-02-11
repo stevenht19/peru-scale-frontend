@@ -9,6 +9,8 @@ type Props = SelectProps & {
 export const RoleSelector = (props: Props) => {
   const { roles } = useRoles()
 
+  const { allowAll, ...rest } = props
+
   return (
     <Select
       options={
@@ -18,7 +20,7 @@ export const RoleSelector = (props: Props) => {
         roles
           .map((rol) => selectAdapter(rol.id_rol, rol.nombre))
       }
-      {...props}
+      {...rest}
     />
   )
 }

@@ -6,6 +6,7 @@ import { getToken } from 'utils/token'
 interface UserAuthenticationContextProps {
   user: User | null
   loading: boolean
+  logoutUser(): void
 }
 
 export const UserAuthenticationContext = createContext({} as UserAuthenticationContextProps)
@@ -35,10 +36,16 @@ export function UserSessionProvider({ children }: {
     getSession()
   }, [])
 
+  const logoutUser = () => {
+    setUser(null)
+    auth.logout()
+  }
+
   return (
     <UserAuthenticationContext.Provider value={{
       user,
-      loading
+      loading,
+      logoutUser
     }}>
       {
         loading ? null : children
