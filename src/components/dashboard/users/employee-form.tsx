@@ -11,6 +11,7 @@ type EmployeeFormProps = {
   title: string
   error: string
   isError: boolean
+  loading: boolean
   onCancel(): void
   onFinish(user: Partial<CreateUser>): Promise<void>
 }
@@ -22,7 +23,8 @@ export const EmployeeForm = ({
   error,
   isError,
   onFinish,
-  onCancel
+  onCancel,
+  loading
 }: EmployeeFormProps) => {
   const { roles } = useRoles()
 
@@ -115,8 +117,8 @@ export const EmployeeForm = ({
           </div>
         </div>
         <div className='mt-3 flex justify-end'>
-          <Button htmlType='submit' type='primary'>
-            Guardar Empleado
+          <Button htmlType='submit' type='primary' loading={loading}>
+            {!loading ? 'Guardar usuario' : 'Guardando...'}
           </Button>
         </div>
         {isError && (

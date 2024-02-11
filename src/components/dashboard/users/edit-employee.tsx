@@ -16,15 +16,19 @@ export const EditEmployee: React.FC<EditEmployeeProps> = ({
   onEditUser
 }) => {
   const [open, setOpen] = useBoolean()
+  const [loading, setLoading] = useBoolean()
   const { error, isError, handleErrorMsg } = useError()
 
   const onSubmit = async (editedUser: CreateUser) => {
     try {
+      setLoading.on()
       await onEditUser({ ...editedUser, id: user.id })
       setOpen.off()
+      setLoading.on()
     } catch(e) {
       if (e instanceof Error)
       handleErrorMsg(e.message)
+      setLoading.off()
     }
   }
 
@@ -36,6 +40,7 @@ export const EditEmployee: React.FC<EditEmployeeProps> = ({
       <EmployeeForm
         title='Editar un empleado'
         open={open}
+        loading={loading}
         onFinish={onSubmit}
         onCancel={setOpen.off}
         isError={isError}

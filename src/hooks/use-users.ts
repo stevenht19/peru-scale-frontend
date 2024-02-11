@@ -1,22 +1,24 @@
+import { message } from 'antd'
 import { useEffect, useState } from 'react'
 import { CreateUser, GetUser } from 'shared/user'
 import { useBoolean } from './use-boolean'
-import { message } from 'antd'
 import {
   createUser,
   editUser,
   fetchUsers
 } from 'services/userService'
+import { sortUsersByName } from 'utils/sort-by-name'
 
 export const useUsers = () => {
   const [users, setUsers] = useState<GetUser[]>([])
+  const [role, setRol] = useState<number>(0)
   const [loading, setLoading] = useBoolean(true)
   const [search, setSearch] = useState('')
 
   useEffect(() => {
     fetchUsers()
-      .then(data => {
-        setUsers(data)
+      .then((data: GetUser[]) => {
+        setUsers(sortUsersByName(data))
       })
       .finally(() => {
         setLoading.off()
@@ -27,15 +29,11 @@ export const useUsers = () => {
     return users.filter((user) => {
       return user.nombres?.toLowerCase().includes(search) ||
       user.apellidos?.toLowerCase().includes(search)
-    })
+    }).filter(user => role === 0 ? true : user.id_rol === role)
   }
 
   const handleAddUser = (users: GetUser[], userToAdd: GetUser) => {
-    return users.concat(userToAdd)
-  }
-
-  const handleDeleteUser = (id: number) => {
-    return users.filter(user => user.id !== id)
+    return [userToAdd, ...users]
   }
 
   const handleEditUser = (users: GetUser[], userToEdit: CreateUser) => {
@@ -63,18 +61,16 @@ export const useUsers = () => {
   const onEditUser = async (userToEdit: CreateUser) => {
     try {
       await editUser(userToEdit)
-
-      /*
-      if (userToEdit.estado === 'inactivo') {
-        setUsers(handleDeleteUser(userToEdit.id))
-        return
-      }*/
-
       setUsers(handleEditUser(users, userToEdit))
       message.success('Empleado editado correctamente')
     } catch(e) {
       throw e
     }
+  }
+
+  const handleFilterByRol = (rol: number) => {
+    console.log(rol)
+    setRol(rol)
   }
 
   const handleSearch = (search: string) => {
@@ -87,6 +83,7 @@ export const useUsers = () => {
     search,
     getUsers,
     handleSearch,
+    handleFilterByRol,
     onCreateUser,
     onEditUser
   }

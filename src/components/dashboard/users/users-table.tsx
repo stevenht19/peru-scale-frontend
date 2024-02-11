@@ -14,7 +14,6 @@ export const UsersTable: React.FC<UsersTableProps> = ({
   loading,
   onEditUser
 }) => {
-
   const { roles } = useRoles()
 
   return (
