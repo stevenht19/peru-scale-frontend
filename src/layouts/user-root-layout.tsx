@@ -3,9 +3,9 @@ import { Sidebar } from './sidebar'
 
 export const UserRootLayout = () => {
   return (
-    <div className='grid grid-cols-5'>
+    <div className='grid grid-flow-col'>
       <Sidebar />
-      <main className='p-4 col-span-4'>
+      <main className='overflow-hidden p-4'>
         <Outlet />
       </main>
     </div>

@@ -9,7 +9,7 @@ export const Sidebar: React.FC = () => {
   const activeClassname = 'bg-gray-100'
 
   return (
-    <aside className='border-r h-screen sticky top-0 flex flex-col'>
+    <aside className='border-r h-screen sticky top-0 flex flex-col w-[16.5rem]'>
       <ul className='flex flex-col flex-1 p-2'>
         <UserGuard role={[ROLES.ADMIN]} nullable>
           <NavLink

@@ -53,7 +53,7 @@ export const columns = ({ onEditUser, roles }: ColumnsProps): ColumnsType<GetUse
   {
     title: 'Telefono',
     dataIndex: 'telefono',
-    width: 240,
+    width: 120,
   },
   {
     title: 'Fecha de registro',

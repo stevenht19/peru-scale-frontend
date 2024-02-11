@@ -12,15 +12,19 @@ export const AddEmployee: React.FC<AddEmployeeProps> = ({
   onCreateUser
 }) => {
   const [open, setOpen] = useBoolean()
+  const [loading, setLoading] = useBoolean()
   const { handleErrorMsg, error, isError } = useError()
 
   const onSubmit = async (user: CreateUser) => {
     try {
+      setLoading.on()
       await onCreateUser(user)
       setOpen.off()
+      setLoading.off()
     } catch (e) {
       if (e instanceof Error)
-        handleErrorMsg(e.message)
+      handleErrorMsg(e.message)
+      setLoading.off()
     }
   }
 
@@ -32,6 +36,7 @@ export const AddEmployee: React.FC<AddEmployeeProps> = ({
       <EmployeeForm
         title='Agregar un empleado'
         onCancel={setOpen.off}
+        loading={loading}
         open={open}
         onFinish={onSubmit}
         isError={isError}
