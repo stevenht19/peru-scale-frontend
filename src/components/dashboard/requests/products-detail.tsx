@@ -9,7 +9,7 @@ export const ProductsDetailsTable: React.FC<ProductDetailsProps> = ({ products }
   return <>
     <h3 className='font-semibold text-lg mt-8 mb-3'>Productos</h3>
     <table>
-      <tr>
+      <thead>
         <th>
           Imagen
         </th>
@@ -19,7 +19,7 @@ export const ProductsDetailsTable: React.FC<ProductDetailsProps> = ({ products }
         <th>
           Cantidad
         </th>
-      </tr>
+      </thead>
       <tbody>
         {products.map((product) => (
           <tr>

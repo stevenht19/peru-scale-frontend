@@ -1,6 +1,7 @@
-import { Button } from 'antd'
 import { ProductsDetailsTable } from 'components/dashboard/requests/products-detail'
+import { RequestDetailFooter } from 'components/dashboard/requests/request-detail-footer'
 import { useRequestDetail } from 'hooks/use-request-detail'
+import { QuotationRequest } from 'models/Quotation'
 import { useParams } from 'react-router-dom'
 
 const RequestDetail = () => {
@@ -22,6 +23,16 @@ const RequestDetail = () => {
         <DetailInfoParagraph label='Tipo de cliente:' info={isClientRegistered} />
         <DetailInfoParagraph label='Medio de Pago:' info={request?.medioDePago} />
       </ul>
+      {
+        Boolean(request?.id_asignado) && (
+          <>
+            <h3 className='font-semibold text-lg mt-8 mb-3'>Encargado: </h3>
+            <ul className='flex flex-col gap-3'>
+              <DetailInfoParagraph label='Nombres y Apellidos:' info={`${request?.nombre_asignado} ${request?.apellidos_asignado}`} />
+            </ul>
+          </>
+        )
+      }
       {request?.id_servicio && (
         <>
           <h3 className='font-semibold text-lg mt-8 mb-3'>Servicio</h3>
@@ -38,15 +49,7 @@ const RequestDetail = () => {
       {Boolean(products.length) && (
         <ProductsDetailsTable products={products} />
       )}
-      {
-        request?.id_asignado === null && (
-          <div className='mt-auto flex justify-end'>
-            <Button type='primary' size='large'>
-              Asignarme Solicitud
-            </Button>
-          </div>
-        )
-      }
+      <RequestDetailFooter {...request as QuotationRequest} />
     </div>
   )
 }

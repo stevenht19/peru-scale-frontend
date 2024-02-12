@@ -58,7 +58,7 @@ export const columns: ColumnsType<GetQuotationRequest> = [
     title: 'Encargado',
     key: 5,
     render(_, record) {
-      return record.nombre_asignado ?? 'Aún no asignado'
+      return record.nombre_asignado ? `${record.nombre_asignado} ${record.apellidos_asignado}` : 'Aún no asignado'
     }
   },
   {

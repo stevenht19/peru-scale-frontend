@@ -21,3 +21,14 @@ export const getQuotationRequestDetail = async (reqId: QuotationRequest['id']) =
     products: res?.products ?? []
   }
 }
+
+export const assignQuotationRequestResponsable = (
+  id: QuotationRequest['id'],
+  responsable: QuotationRequest['id_asignado']
+) => {
+  const assignResponsable = {
+    user_id: responsable
+  }
+
+  return api(HttpMethod.PATCH, `/cotizaciones/asignar/${id}`, assignResponsable)
+}
