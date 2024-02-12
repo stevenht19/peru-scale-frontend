@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DeleteOutlined } from '@ant-design/icons'
 import { Button, Image, Popconfirm, Table } from 'antd'
-import { EditableCell, EditableRow } from 'components/ui/editable-table'
 import { useCounter } from 'hooks/use-count'
 import { PreQuotedProduct } from 'models/Products'
 import { QuantitySelector } from 'pages/products/[id]/quantity-selector'
@@ -52,12 +51,9 @@ export function PreQuoteList({
       editable: true,
       width: 160,
       dataIndex: 'quantity',
-      editableElement: (product: PreQuotedProduct) => {
-        return (
-          <Quantity product={product} modifyQuantity={modifyQuantity} />
-        )
+      render(_: any, product: any) {
+        return <Quantity product={product} modifyQuantity={modifyQuantity} />
       }
-
     },
     {
       title: '',
@@ -78,33 +74,9 @@ export function PreQuoteList({
     }
   ]
 
-  const components = {
-    body: {
-      row: EditableRow,
-      cell: EditableCell,
-    },
-  };
-
-  const editableColumns: any[] = columns.map((col) => {
-    if (!col.editable) {
-      return col;
-    }
-    return {
-      ...col,
-      onCell: (record: PreQuotedProduct) => ({
-        record,
-        editable: col.editable,
-        dataIndex: col.dataIndex,
-        title: col.title,
-        editableElement: col.editableElement
-      }),
-    }
-  })
-
   return (
     <Table
-      components={components}
-      columns={editableColumns}
+      columns={columns}
       dataSource={products}
       rowClassName={() => 'editable-row'}
       rowKey={(product) => product.id}

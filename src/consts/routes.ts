@@ -21,5 +21,6 @@ export const enum Routes {
   
   VERIFY = '/verify',
   SERVICES = '/services',
-  DASHBOARD = '/dashboard'
+  DASHBOARD = '/dashboard',
+  REQUESTS = 'requests' // SOLICITUDES DE COTIZACION
 } 

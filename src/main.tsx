@@ -24,6 +24,8 @@ import { UserGuard } from 'hocs/user-guard'
 import { ROLES } from 'consts/roles'
 import './index.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Requests from 'pages/dashboard/requests/requests'
+import RequestDetail from 'pages/dashboard/requests/[id]'
 
 const router = createBrowserRouter([
   {
@@ -104,10 +106,17 @@ const router = createBrowserRouter([
             <UserManagement />
           </UserGuard>
         )
+      },
+      {
+        path: Routes.REQUESTS,
+        element: <Requests />,
+      },
+      {
+        path: `${Routes.REQUESTS}/:id`,
+        element: <RequestDetail />
       }
     ]
-  }
-
+  },
 ])
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
