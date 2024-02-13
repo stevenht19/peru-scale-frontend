@@ -17,3 +17,7 @@ export const getAccessToken = () => {
 export const deleteAccessToken = () => {
   localStorage.removeItem('PeruScale-access-token')
 }
+
+export const deleteToken = () => {
+  localStorage.removeItem('PeruScale-token')
+}

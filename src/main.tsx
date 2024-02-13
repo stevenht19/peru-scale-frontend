@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom'
 import { Routes } from 'consts/routes.ts'
 import { AuthClientGuard } from 'hocs/auth'
+import { UserRootLayout } from 'layouts/user-root-layout'
 import Home from 'pages/home/home'
 import Login from 'pages/login/login'
 import Signup from 'pages/signup/signup'
@@ -14,15 +15,17 @@ import Products from 'pages/products/products'
 import List from 'pages/pre quote list/list'
 import ConfigProvider from 'context/config.context'
 import RecoverPassword from 'pages/recover/recover-password'
-import './index.css'
-import 'bootstrap/dist/css/bootstrap.min.css';
 import ProductDetails from 'pages/products/[id]'
 import VerifyAccount from 'pages/signup/verify'
 import Services from 'pages/services/services'
-import UserAdmin from 'pages/user-admin/UserAdmin';
+import { EditAccount } from 'pages/profile/edit-profile'
+import UserManagement from 'pages/dashboard/users-management'
+import { UserGuard } from 'hocs/user-guard'
+import { ROLES } from 'consts/roles'
+import './index.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-
-const router = createBrowserRouter([  
+const router = createBrowserRouter([
   {
     path: Routes.HOME,
     element: <Home />,
@@ -71,19 +74,48 @@ const router = createBrowserRouter([
     path: Routes.SERVICES,
     element: <Services />
   },
- {
-    path: Routes.USER_ADMIN, 
-    element: <UserAdmin />
+  {
+    path: Routes.EDITACCOUNT,
+    loader: () => {
+      console.log('')
+      return null
+    },
+    element: (
+      <EditAccount />
+    ),
+  },
+  {
+    path: `${Routes.DASHBOARD}`,
+    element: (
+      <UserGuard
+        role={[ROLES.ADMIN, ROLES.SELLER]}
+        privateRoute
+      >
+        <UserRootLayout />
+      </UserGuard>
+    ),
+    children: [
+      {
+        path: Routes.USER_ADMIN,
+        element: (
+          <UserGuard
+            role={[ROLES.ADMIN]}
+          >
+            <UserManagement />
+          </UserGuard>
+        )
+      }
+    ]
   }
 
 ])
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <ConfigProvider>
-      <UserSessionProvider>
+    <UserSessionProvider>
+      <ConfigProvider>
         <RouterProvider router={router} />
-      </UserSessionProvider>
-    </ConfigProvider>
+      </ConfigProvider>
+    </UserSessionProvider>
   </React.StrictMode>
 )
