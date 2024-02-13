@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { SearchBar } from './SearchBar';
-import { UserRow } from './UserRow';
+import SearchBar from './SearchBar';
+import UserRow from './UserRow';
 import { fetchUsers } from '../services/userService'; // Asegúrate de que esta importación sea correcta
 
 type User = {
