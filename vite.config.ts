@@ -11,6 +11,7 @@ export default defineConfig({
       layouts: "/src/layouts",
       consts: "/src/consts",
       utils: "/src/utils",
+      models: "/src/models",
       services: "/src/services",
       hooks: "/src/hooks",
       hocs: "/src/hocs",

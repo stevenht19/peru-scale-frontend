@@ -21,7 +21,7 @@ export default function UserManagement() {
       <h2 className='mb-3 xl:mb-2 text-xl font-semibold'>
         Administración de Usuarios
       </h2>
-      <Filters totalUsers={users.length}>
+      <Filters totalData={users.length}>
         <RoleSelector
           className='w-32'
           onChange={handleFilterByRol}
