@@ -7,9 +7,10 @@ export type CreateQuotationRequest = QuotationRequest & {
 
 export type GetQuotationRequest = QuotationRequest & {
   nombre_asignado: string | null
+  apellidos_asignado: string | null
 }
 
-export type OptionalServiceQuotationRequest = Partial<ServiceQuotationRequest>
+export type OptionalServiceQuotationRequest = Partial<ServiceQuotationRequest> & GetQuotationRequest
 
 export type GetProductsQuotationRequest = {
   imagen: string

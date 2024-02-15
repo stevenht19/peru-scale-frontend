@@ -58,12 +58,19 @@ export const columns: ColumnsType<GetQuotationRequest> = [
     title: 'Encargado',
     key: 5,
     render(_, record) {
-      return record.nombre_asignado ?? 'Aún no asignado'
+      return record.nombre_asignado ? `${record.nombre_asignado} ${record.apellidos_asignado}` : 'Aún no asignado'
+    }
+  },
+  {
+    title: 'Fecha registro',
+    key: 6,
+    render(_, record) {
+      return dayjs(record.fecha_registro).format('D MMMM YYYY, HH:mm:ss')
     }
   },
   {
     title: 'Fecha Atención',
-    key: 6,
+    key: 7,
     render(_, record) {
       return record.fecha_atencion ?
         dayjs(record.fecha_atencion).format('D MMMM YYYY, HH:mm:ss') : 'Aún no atendido'
@@ -71,7 +78,7 @@ export const columns: ColumnsType<GetQuotationRequest> = [
   },
   {
     title: '',
-    key: 7,
+    key: 8,
     render(_, request) {
       return (
         <Link to={`/dashboard/requests/${request.id}`}>

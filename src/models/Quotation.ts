@@ -13,6 +13,7 @@ export interface QuotationRequest {
   telefono: string
   dni: string
   id_servicio: number | null
+  fecha_registro: string
   id_cliente: number | null
   id_asignado?: number
   fecha_atencion?: string

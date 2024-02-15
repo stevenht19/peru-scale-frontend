@@ -3,7 +3,8 @@ import { getToken } from './token';
 export const enum HttpMethod {
   GET = 'GET',
   POST = 'POST',
-  PUT = 'PUT'
+  PUT = 'PUT',
+  PATCH = 'PATCH'
 }
 
 export const api = async (method: HttpMethod, path: string, body?: unknown, customToken?: string) => {
