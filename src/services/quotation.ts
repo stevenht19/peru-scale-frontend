@@ -32,3 +32,7 @@ export const assignQuotationRequestResponsable = (
 
   return api(HttpMethod.PATCH, `/cotizaciones/asignar/${id}`, assignResponsable)
 }
+
+export const getAssignedRequestsByUserId = (userId: number) => {
+  return api(HttpMethod.GET, `/cotizaciones/pendientes/${userId}`)
+}

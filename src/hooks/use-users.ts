@@ -8,8 +8,10 @@ import {
   fetchUsers
 } from 'services/userService'
 import { sortUsersByName } from 'utils/sort-by-name'
+import { useSession } from './use-session'
 
 export const useUsers = () => {
+  const { user } = useSession()
   const [users, setUsers] = useState<GetUser[]>([])
   const [role, setRol] = useState<number>(0)
   const [loading, setLoading] = useBoolean(true)
@@ -50,7 +52,12 @@ export const useUsers = () => {
   }
 
   const onCreateUser = async (userToCreate: CreateUser) => {
-    const createdUser: GetUser = await createUser(userToCreate)
+    const createdUser: GetUser = await createUser({
+      ...userToCreate,
+      usuario_registro: `${user?.nombres} ${user?.apellidos}`
+    })
+
+    console.log(createdUser)
 
     if (createdUser) {
       setUsers(handleAddUser(users, createdUser))
@@ -58,8 +65,14 @@ export const useUsers = () => {
     }
   }
 
-  const onEditUser = async (userToEdit: CreateUser) => {
+  const onEditUser = async (createUser: CreateUser) => {
     try {
+
+      const userToEdit = {
+        ...createUser,
+        usuario_actualizacion: `${user?.nombres} ${user?.apellidos}`
+      }
+
       await editUser(userToEdit)
       setUsers(handleEditUser(users, userToEdit))
       message.success('Empleado editado correctamente')

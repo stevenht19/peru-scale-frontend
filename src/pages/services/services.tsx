@@ -4,12 +4,14 @@ import { Header } from 'layouts/header'
 import { ServiceQuotationRequest } from 'models/Quotation'
 import { requestServiceQuotation } from 'services/quotation'
 import PriceDataForm from 'components/forms/price-personal-data'
+import { useSession } from 'hooks/use-session'
 
 export default function Services() {
+  const { user } = useSession()
   const { services } = useServices()
 
   const onSubmit = async (request: ServiceQuotationRequest) => {
-    await requestServiceQuotation(request)
+    await requestServiceQuotation({...request, id_cliente: user?.id ?? null})
     message.success('Solicitud enviada correctamente')
   }
 

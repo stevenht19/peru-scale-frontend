@@ -7,14 +7,14 @@ export default function Requests() {
   const { requests, getRequests, handleChangeStatus } = useQuotationRequests()
 
   return (
-    <div>
-      <h2 className='mb-3 xl:mb-2 text-xl font-semibold'>
+    <div className='p-7'>
+      <h2 className='text-xl font-semibold'>
         Solicitudes de cotización
       </h2>
       <Filters totalData={requests.length}>
         <RequestStateSelect onChange={handleChangeStatus} />
       </Filters>
-      <div className='mt-2'>
+      <div className='mt-3'>
         <RequestsTable requests={getRequests()} />
       </div>
     </div>
