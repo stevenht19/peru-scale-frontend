@@ -17,7 +17,7 @@ export default function UserManagement() {
   } = useUsers()
 
   return (
-    <div>
+    <div className='p-7'>
       <h2 className='mb-3 xl:mb-2 text-xl font-semibold'>
         Administración de Usuarios
       </h2>

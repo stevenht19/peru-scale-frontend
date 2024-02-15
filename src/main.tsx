@@ -26,6 +26,8 @@ import './index.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Requests from 'pages/dashboard/requests/requests'
 import RequestDetail from 'pages/dashboard/requests/[id]'
+import { MyTasks } from 'pages/dashboard/tasks/tasks'
+import { TaskDetail } from 'pages/dashboard/tasks/[id]'
 
 const router = createBrowserRouter([
   {
@@ -114,6 +116,16 @@ const router = createBrowserRouter([
       {
         path: `${Routes.REQUESTS}/:id`,
         element: <RequestDetail />
+      },
+      {
+        path: `${Routes.TASKS}`,
+        element: <MyTasks />,
+        children: [
+          {
+            path: ':id',
+            element: <TaskDetail />
+          }
+        ]
       }
     ]
   },

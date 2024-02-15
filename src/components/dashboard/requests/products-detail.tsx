@@ -29,7 +29,6 @@ export const ProductsDetailsTable: React.FC<ProductDetailsProps> = ({ products }
                 width={45}
                 height={45}
                 alt={product.nombre}
-                className='my-2'
               />
             </td>
             <td>
