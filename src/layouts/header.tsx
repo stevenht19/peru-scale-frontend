@@ -43,7 +43,15 @@ export function Header() {
       ),
     },
     {
-      key: 2,
+      key: (user?.nombre_rol !== ROLES.CLIENT) ? 2 : 0,
+      label: (
+        <Link to={Routes.DASHBOARD}>
+          Dashboard
+        </Link>
+      ),
+    },
+    {
+      key: 3,
       label: (
         <button onClick={onClick}>
           Cerrar Sesión

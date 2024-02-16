@@ -39,7 +39,7 @@ export const columns = ({ onEditUser, roles }: ColumnsProps): ColumnsType<GetUse
     render(id_rol: number, record) {
       return (
         <Tag color={roleColors[record.nombre_rol]}>
-          {roles?.find(rol => rol.id_rol === id_rol)?.nombre}
+          {roles?.find(rol => rol.id_rol === id_rol)?.nombre ?? record.nombre_rol}
         </Tag>
       )
     }
@@ -66,7 +66,7 @@ export const columns = ({ onEditUser, roles }: ColumnsProps): ColumnsType<GetUse
   },
   {
     title: 'Usuario Registro',
-    dataIndex: 'usuario_actualizacion',
+    dataIndex: 'usuario_registro',
     key: 5,
     width: 155,
     render(user) {
