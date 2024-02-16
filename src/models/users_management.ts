@@ -13,3 +13,5 @@ export interface UserManagement {
   id_rol: number;
   estado: 'activo' | 'inactivo';
 }
+
+

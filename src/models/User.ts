@@ -12,6 +12,7 @@ export interface User {
   id_rol?: number
   nombre_rol: ROLES
   estado?: 'activo' | 'inactivo'
+  usuario_registro: string;
 }
 
 export type UserCredentials = Pick<User, 'correo' | 'password'>

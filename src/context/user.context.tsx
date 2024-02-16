@@ -5,6 +5,7 @@ import { getToken } from 'utils/token'
 
 interface UserAuthenticationContextProps {
   user: User | null
+  userName: string | null; // Agregamos el nombre del usuario al contexto
   loading: boolean
   logoutUser(): void
 }
@@ -41,9 +42,13 @@ export function UserSessionProvider({ children }: {
     auth.logout()
   }
 
+    // Extraemos el nombre del usuario si existe, de lo contrario, usamos null
+    const userName = user?.usuario_registro || null;
+
   return (
     <UserAuthenticationContext.Provider value={{
       user,
+      userName, // Agregamos el nombre del usuario al contexto
       loading,
       logoutUser
     }}>
