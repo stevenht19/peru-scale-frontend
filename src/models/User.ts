@@ -14,7 +14,7 @@ export interface User {
   estado?: 'activo' | 'inactivo'
   usuario_actualizacion?: string
   usuario_registro?: string
-  id_cliente?:String
+  // id_cliente?:String
 }
 
 export type UserCredentials = Pick<User, 'correo' | 'password'>

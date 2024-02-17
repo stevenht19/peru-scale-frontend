@@ -14,7 +14,7 @@ const statusColor = {
   [QuotationRequestState.DENIED]: 'error'
 }
 
-export const TaskCard = ({ cliente, empresa, fecha_registro, estado, id }: GetQuotationRequest) => {
+export const TaskCard = ({ cliente, empresa, fecha_registro, estado, id, id_servicio }: GetQuotationRequest) => {
   return (
     <Link to={`${id}`}className='hover:bg-gray-50 rounded-md p-3'>
       <div className='flex justify-between'>
@@ -32,7 +32,7 @@ export const TaskCard = ({ cliente, empresa, fecha_registro, estado, id }: GetQu
         </div>
       </div>
       <p className='text-gray-600'>
-        Solicitud de compra emitida por la empresa {empresa}
+      {id_servicio ? 'Solicitud de servicio' : 'Solicitud de compra'} emitida por la empresa {empresa}
       </p>
     </Link>
   )

@@ -69,7 +69,7 @@ export const columns: ColumnsType<GetQuotationRequest> = [
     }
   },
   {
-    title: 'Fecha Atención',
+    title: 'Fecha Asignación',
     key: 7,
     render(_, record) {
       return record.fecha_atencion ?
