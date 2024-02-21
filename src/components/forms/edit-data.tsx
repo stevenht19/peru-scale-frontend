@@ -1,39 +1,30 @@
 import { getRequiredRule } from 'utils/form'
+import { CreateUser } from "shared/user";
 import { Button, Form, Input} from 'antd'
-import { CredentialFormProps } from './types'
-import { User, UserCredentials } from 'models/User'
-import { useForm } from 'antd/es/form/Form'
 import { useSession } from 'hooks/use-session'
-import { useBoolean } from 'hooks/use-boolean'
 
 
-export const EditDataForm = ({
-    onSubmit }: CredentialFormProps) => {
-    const [loading, setLoading] = useBoolean()
-    const [submitting] = useBoolean()
-    const {  user } = useSession()
-    const [form] = useForm()
-      
-        const onFinish = (values: Partial<User>) => {
-            try{
-                setLoading.on()
-            }catch(error){
-                console.error('Error al actualizar los datos del usuario', error);
-            }finally{
-                onSubmit && onSubmit(values as UserCredentials)
-              .finally(setLoading.off)
-            }
-          }
-  
-    if (loading) return null
+type UserFormProps = {
+  user1?: CreateUser;
+  onFinish(user: Partial<CreateUser>): Promise<void>;
+};
+
+
+export const EditDataForm = ({ 
+  user1, 
+  onFinish
+ }: UserFormProps) => {
+
+  const {  user } = useSession();
+
   
   return (
     <Form
-      form={form}
       layout='vertical'
       className='my-3'
       requiredMark={false}
       onFinish={onFinish}
+      initialValues={user1}
     >
       <div className='row'>
         <div className='col-md-6'>
@@ -47,16 +38,11 @@ export const EditDataForm = ({
                 message: 'Solo se admiten letras en este campo',
               },
             ]}
-            {...user && { initialValue: user.nombres!  }}
+            initialValue={user?.nombres ?? ''}
           >
-            {user ? (
-              <Input
-                size='large'
-                defaultValue={user.nombres! }
-              />
-            ) : (
-              <Input size='large' />
-            )}
+            
+              <Input/>
+            
           </Form.Item>
           <Form.Item
             label='Apellidos'
@@ -68,36 +54,27 @@ export const EditDataForm = ({
                 message: 'Solo se admiten letras en este campo',
               },
             ]}
-            {...user && { initialValue:  user.apellidos! }}
+            initialValue={user?.apellidos ?? ''}
           >
-            {user ? (
-              <Input
-                size='large'
-                defaultValue={ user.apellidos!}
-              />
-            ) : (
-              <Input size='large' />
-            )}
+            <Input/>
+            
           </Form.Item>
           <Form.Item
             label='DNI'
+            name={'dni'}
              rules={[
+              
             ...getRequiredRule('DNI'),
           {
             pattern: /^[0-9]{8}$/,
             message: 'Ingrese un DNI válido',
+            
           },
         ]}
-        {...user && { initialValue: user.dni! }}
-            name={'dni'}
+        initialValue={user?.dni ?? ''}
       >
-         {user ?
-            <Input 
-            size='large' 
-            defaultValue={user.dni!} 
-            readOnly /> : 
-            <Input size='large' />
-            }
+         <Input disabled/> 
+            
       </Form.Item>
           
         </div>
@@ -112,16 +89,14 @@ export const EditDataForm = ({
               },
               ...getRequiredRule('Correo electrónico'),
             ]}
-            {...user && { initialValue: user.correo }}
+            initialValue={user?.correo ?? ''}
           >
-            {user ? (
-              <Input size='large' defaultValue={user?.correo} />
-            ) : (
-              <Input size='large' />
-            )}
+            <Input disabled/>
+            
           </Form.Item>
           <Form.Item
             label='Telefono'
+            name={'telefono'}
             rules={[
               ...getRequiredRule('Telefono'),
               {
@@ -129,31 +104,25 @@ export const EditDataForm = ({
                 message: 'Ingrese un número de teléfono válido',
               },
             ]}
-            {...user && { initialValue: user.telefono! }}
-            name={'telefono'}
+            initialValue={user?.telefono ?? ''}
           >
-            {user ?
-              <Input size='large' defaultValue={user.telefono!} /> :
-              <Input size='large' />
-            }
+            <Input/>
+            
           </Form.Item>
           <Form.Item
             label='Dirección'
             rules={getRequiredRule('Direccion')}
             name={'direccion'}
-            {...user && { initialValue: user.direccion }}
+            initialValue={user?.direccion ?? ''}
           >
-            {user ? (
-              <Input size='large' defaultValue={user.direccion!} />
-            ) : (
-              <Input size='large' />
-            )}
+            <Input />
+            
           </Form.Item>
 
           <Button
+            
             size='large'
             type='primary'
-            loading={submitting}
             className='w-full mt-2'
             htmlType='submit'
           >

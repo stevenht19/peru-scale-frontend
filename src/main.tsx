@@ -18,7 +18,7 @@ import RecoverPassword from 'pages/recover/recover-password'
 import ProductDetails from 'pages/products/[id]'
 import VerifyAccount from 'pages/signup/verify'
 import Services from 'pages/services/services'
-import { EditAccount } from 'pages/profile/edit-profile'
+import EditUserForm from 'pages/profile/edit-profile'
 import UserManagement from 'pages/dashboard/users-management'
 import { UserGuard } from 'hocs/user-guard'
 import { ROLES } from 'consts/roles'
@@ -85,7 +85,7 @@ const router = createBrowserRouter([
       return null
     },
     element: (
-      <EditAccount />
+      <EditUserForm />
     ),
   },
   {
