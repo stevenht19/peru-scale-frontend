@@ -24,4 +24,6 @@ export const enum Routes {
   DASHBOARD = '/dashboard',
   REQUESTS = 'requests', // SOLICITUDES DE COTIZACION
   TASKS = 'tasks',
+
+  QUOTE = '/quote', //cotizacion
 } 

@@ -29,6 +29,9 @@ import RequestDetail from 'pages/dashboard/requests/[id]'
 import { MyTasks } from 'pages/dashboard/tasks/tasks'
 import { TaskDetail } from 'pages/dashboard/tasks/[id]'
 
+import Quote_view from 'pages/quote view/quote_view'  
+
+
 const router = createBrowserRouter([
   {
     path: Routes.HOME,
@@ -79,6 +82,10 @@ const router = createBrowserRouter([
     element: <Services />
   },
   {
+    path: Routes.QUOTE,
+    element: <Quote_view />
+  },
+  {
     path: Routes.EDITACCOUNT,
     loader: () => {
       console.log('')
@@ -126,7 +133,10 @@ const router = createBrowserRouter([
             element: <TaskDetail />
           }
         ]
-      }
+      },
+
+      
+      
     ]
   },
 ])
