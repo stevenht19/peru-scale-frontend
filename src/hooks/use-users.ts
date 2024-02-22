@@ -68,9 +68,14 @@ export const useUsers = () => {
   const onEditUser = async (createUser: CreateUser) => {
     try {
 
+      // const userToEdit = {
+      //   ...createUser,
+      //   usuario_actualizacion: `${user?.nombres} ${user?.apellidos}`
+      // }
       const userToEdit = {
         ...createUser,
-        usuario_actualizacion: `${user?.nombres} ${user?.apellidos}`
+        usuario_actualizacion: `${user?.nombres} ${user?.apellidos}`,
+        fecha_actualizacion: new Date().toISOString()
       }
 
       await editUser(userToEdit)
