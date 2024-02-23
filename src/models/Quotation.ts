@@ -1,7 +1,8 @@
 export const enum QuotationRequestState {
   PENDING = 'pendiente',
   DENIED = 'denegada',
-  CANCELED = 'cancelada'
+  CANCELED = 'cancelada',
+  ATTENDED = 'atendido'
 }
 
 export interface QuotationRequest {
@@ -11,6 +12,7 @@ export interface QuotationRequest {
   cliente: string
   direccion: string
   telefono: string
+  solicitante_correo: string
   dni: string
   id_servicio: number | null
   fecha_registro: string
@@ -23,6 +25,7 @@ export interface QuotationRequest {
 export interface ServiceQuotationRequest extends QuotationRequest {
   id: number
   mensaje?: string
+  precio: number
   balanzaDescripcion?: string
   descripcion_servicio?: string
   capacidadBalanza?: string

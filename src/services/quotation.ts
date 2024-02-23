@@ -1,5 +1,5 @@
 import { QuotationRequest, ServiceQuotationRequest } from 'models/Quotation'
-import { CreateQuotationRequest } from 'shared/quotation'
+import { CreateQuotationRequest, GetProductsQuotationRequest } from 'shared/quotation'
 import { HttpMethod, api } from 'utils/api'
 
 export const requestQuotation = (createQuotationReq: CreateQuotationRequest) => {
@@ -22,6 +22,14 @@ export const getQuotationRequestDetail = async (reqId: QuotationRequest['id']) =
   }
 }
 
+export const editProductsPrice = (products: GetProductsQuotationRequest[]) => {
+  return api(HttpMethod.PATCH, `/cotizaciones/productos/precio-unitario`, { products })
+}
+
+export const editServicePrice = (price: number, id: number) => {
+  return api(HttpMethod.PATCH, `/cotizaciones/servicio/${id}/precio`, { price })
+}
+
 export const assignQuotationRequestResponsable = (
   id: QuotationRequest['id'],
   responsable: QuotationRequest['id_asignado']
@@ -35,4 +43,8 @@ export const assignQuotationRequestResponsable = (
 
 export const getAssignedRequestsByUserId = (userId: number) => {
   return api(HttpMethod.GET, `/cotizaciones/pendientes/${userId}`)
+}
+
+export const emitQuotation = (formData: FormData, requestId: number) => {
+  return api(HttpMethod.POST, `/cotizaciones/emitir/${requestId}`, formData)
 }

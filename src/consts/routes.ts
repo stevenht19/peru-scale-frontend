@@ -25,5 +25,5 @@ export const enum Routes {
   REQUESTS = 'requests', // SOLICITUDES DE COTIZACION
   TASKS = 'tasks',
 
-  QUOTE = '/quote', //cotizacion
+  QUOTE = 'quote', //cotizacion
 } 

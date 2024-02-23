@@ -15,10 +15,15 @@ export const RequestDetailFooter = ({ id, id_asignado }: QuotationRequest) => {
 
   const onClick = async () => {
     setLoading.on()
-    await assignQuotationRequestResponsable(id, user?.id)
-    setLoading.off()
-    navigate(`${Routes.DASHBOARD}/${Routes.REQUESTS}`)
-    message.success('Solicitud de cotización asignada correctamente')
+    try {
+      await assignQuotationRequestResponsable(id, user?.id)
+      setLoading.off()
+      navigate(`${Routes.DASHBOARD}/${Routes.REQUESTS}`)
+      message.success('Solicitud de cotización asignada correctamente')
+    } catch(e) {
+      setLoading.off()
+      message.error('Tienes una solicitud de cotización pendiente')
+    }
   }
 
   return (

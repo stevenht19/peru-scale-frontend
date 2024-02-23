@@ -1,4 +1,4 @@
-import { PreQuotedProduct } from 'models/Products' 
+import { PreQuotedProduct, Product } from 'models/Products' 
 import { QuotationRequest, ServiceQuotationRequest } from 'models/Quotation'
 
 export type CreateQuotationRequest = QuotationRequest & {
@@ -12,8 +12,12 @@ export type GetQuotationRequest = QuotationRequest & {
 
 export type OptionalServiceQuotationRequest = Partial<ServiceQuotationRequest> & GetQuotationRequest
 
-export type GetProductsQuotationRequest = {
-  imagen: string
+export type GetProductsQuotationRequest = Product & {
   cantidad: number
   nombre: string
+  precio: number
+  descuentos: number
+  precio_unitario: number
 }
+
+export type EditProductsPrice = Pick<GetProductsQuotationRequest, 'id' | 'precio_unitario'>

@@ -6,9 +6,11 @@ import { GetProductsQuotationRequest, OptionalServiceQuotationRequest } from 'sh
 export function useRequestDetail(requestId: QuotationRequest['id']) {
   const [request, setRequest] = useState<OptionalServiceQuotationRequest | null>(null)
   const [products, setProducts] = useState<GetProductsQuotationRequest[]>([])
+  const [loading, setLoading] = useState<boolean>(false)
 
   useEffect(() => {
     const isValidId = !isNaN(requestId)
+    setLoading(true)
 
     const getDetail = () => {
       if (isValidId) request
@@ -17,6 +19,8 @@ export function useRequestDetail(requestId: QuotationRequest['id']) {
         .then((res) => {
           setRequest(res.data)
           setProducts(res.products)
+        }).finally(() => {
+          setLoading(false)
         })
     }
 
@@ -24,8 +28,20 @@ export function useRequestDetail(requestId: QuotationRequest['id']) {
 
   }, [requestId])
 
+  const reload = () => {
+    setLoading(true)
+    getQuotationRequestDetail(requestId)
+      .then((res) => {
+        setRequest(res.data)
+        setProducts(res.products)
+      }).finally(() => {
+        setLoading(false)
+      })
+  }
   return {
     request,
-    products
+    products,
+    loading,
+    reload,
   }
 }

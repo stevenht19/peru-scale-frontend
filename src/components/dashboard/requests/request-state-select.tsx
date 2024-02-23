@@ -14,13 +14,9 @@ export const RequestStateSelect = ({ onChange }: SelectProps) => {
           value: QuotationRequestState.PENDING
         },
         {
-          label: QuotationRequestState.DENIED,
-          value: QuotationRequestState.DENIED,
+          label: QuotationRequestState.ATTENDED,
+          value: QuotationRequestState.ATTENDED,
         },
-        {
-          label: QuotationRequestState.CANCELED,
-          value: QuotationRequestState.CANCELED
-        }
       ]}
 
     />

@@ -20,14 +20,20 @@ export const api = async (method: HttpMethod, path: string, body?: unknown, cust
   };
 
   if (body && typeof body !== 'string') {
-    options.body = JSON.stringify(body)
+
+    if (body instanceof FormData) {
+      delete options!.headers
+      options.body = body
+    } else {
+      options.body = JSON.stringify(body)
+    }
   }
 
   try {
     const response = await fetch(url, options)
     const data = await response.json()
 
-    if (data.error) {
+    if (data?.error) {
       throw new Error(data.message)
     }
 
