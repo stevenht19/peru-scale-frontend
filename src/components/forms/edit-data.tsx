@@ -1,12 +1,12 @@
 import { getRequiredRule } from 'utils/form'
-import { CreateUser } from "shared/user";
+import { GetUserClient } from 'shared/user_client';
 import { Button, Form, Input} from 'antd'
 import { useSession } from 'hooks/use-session'
 
 
 type UserFormProps = {
-  user1?: CreateUser;
-  onFinish(user: Partial<CreateUser>): Promise<void>;
+  user1?: GetUserClient;
+  onFinish(user: Partial<GetUserClient>): Promise<void>;
 };
 
 

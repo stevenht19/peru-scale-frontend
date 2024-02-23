@@ -5,7 +5,7 @@ export const enum Routes {
   SIGNIN = '/signin',
   LOGOUT = '/logout',
 
-  EDITACCOUNT = '/edit',
+  EDITACCOUNT = '/edit', //editar cliente
 
   USER_ADMIN = 'admin/users', // la ruta de administración de usuarios
 

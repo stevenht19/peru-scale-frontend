@@ -1,23 +1,23 @@
 import EditDataForm from "components/forms/edit-data";
 import { Header } from "layouts/header";
-import { CreateUser } from "shared/user";
+import { GetUserClient } from "shared/user_client";
 import { message } from 'antd'
 
 type EditProfileFormProps = {
-    user: CreateUser;
-    onEditUser(user: CreateUser): Promise<void>
+    user1: GetUserClient;
+    updateClientUser(user1: GetUserClient): Promise<void>
   };
   
   export const EditUserForm: React.FC<EditProfileFormProps> = ({ 
-    user, 
-    onEditUser, 
+    user1, 
+    updateClientUser, 
   }) => {
     
   
-    const handleSubmit = async (editedUser: CreateUser) => {
+    const handleSubmit = async (updatedUser: GetUserClient) => {
       try {
-        if (user && user.id) {
-          await onEditUser({ ...editedUser, id: user.id });
+        if (user1 && user1.id) {
+          await updateClientUser({ ...updatedUser, id: user1.id });
           console.error('Cambios guardados');
           message.success('Se guardaron los cambios exitosamente')
         } else {
@@ -34,7 +34,7 @@ type EditProfileFormProps = {
     <Header></Header>
     <div className='max-w-6xl mx-auto px-4'>
     <EditDataForm 
-    user1={user} onFinish={handleSubmit}
+    user1={user1} onFinish={handleSubmit}
     />
     </div>
     </>
