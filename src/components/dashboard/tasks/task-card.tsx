@@ -10,8 +10,9 @@ dayjs.extend(relativeTime)
 
 const statusColor = {
   [QuotationRequestState.PENDING]: 'processing',
-  [QuotationRequestState.CANCELED]: 'success',
-  [QuotationRequestState.DENIED]: 'error'
+  [QuotationRequestState.ATTENDED]: 'success',
+  [QuotationRequestState.DENIED]: 'error',
+  [QuotationRequestState.CANCELED]: 'success'
 }
 
 export const TaskCard = ({ cliente, empresa, fecha_registro, estado, id, id_servicio }: GetQuotationRequest) => {
@@ -21,7 +22,7 @@ export const TaskCard = ({ cliente, empresa, fecha_registro, estado, id, id_serv
         <div className='flex gap-2 text-sm bg-gray-100 w-fit px-2 py-0.5 rounded'>
           <Badge status={statusColor[estado] as BadgeProps['status']} />
           <span className='capitalize'>
-            {estado === QuotationRequestState.CANCELED ? 'atendido' : estado}
+            {estado}
           </span>
         </div>
         <time className='text-gray-500'>{dayjs(fecha_registro).locale('es').fromNow()}</time>

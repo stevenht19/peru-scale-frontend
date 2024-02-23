@@ -30,6 +30,7 @@ import { MyTasks } from 'pages/dashboard/tasks/tasks'
 import { TaskDetail } from 'pages/dashboard/tasks/[id]'
 
 import Quote_view from 'pages/quote view/quote_view'  
+import { quotationLoader } from 'pages/quote view/loader'
 
 
 const router = createBrowserRouter([
@@ -82,13 +83,8 @@ const router = createBrowserRouter([
     element: <Services />
   },
   {
-    path: Routes.QUOTE,
-    element: <Quote_view />
-  },
-  {
     path: Routes.EDITACCOUNT,
     loader: () => {
-      console.log('')
       return null
     },
     element: (
@@ -125,18 +121,20 @@ const router = createBrowserRouter([
         element: <RequestDetail />
       },
       {
+        path: `${Routes.QUOTE}/:id`,
+        loader: quotationLoader,
+        element: <Quote_view />
+      },
+      {
         path: `${Routes.TASKS}`,
         element: <MyTasks />,
         children: [
           {
             path: ':id',
             element: <TaskDetail />
-          }
+          },
         ]
       },
-
-      
-      
     ]
   },
 ])
