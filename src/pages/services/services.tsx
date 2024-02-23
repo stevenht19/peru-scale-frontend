@@ -11,7 +11,7 @@ export default function Services() {
   const { services } = useServices()
 
   const onSubmit = async (request: ServiceQuotationRequest) => {
-    await requestServiceQuotation({...request, id_cliente: user?.id ?? null})
+    await requestServiceQuotation({...request, id_cliente: user?.id ?? null, solicitante_correo: user!.correo })
     message.success('Solicitud enviada correctamente')
   }
 
