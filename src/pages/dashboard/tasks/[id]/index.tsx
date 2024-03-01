@@ -28,7 +28,7 @@ export const TaskDetail = () => {
   }
 
   return (
-    <div className='border-l p-4 h-screen flex flex-col gap-3.5'>
+    <div className='border-l p-4 h-screen flex flex-col gap-3.5 overflow-auto'>
       {Boolean(!request.id_servicio && products?.length) && (
         <div className='my-4 flex flex-col'>
           <ProductsDetailsTable
@@ -63,7 +63,7 @@ export const TaskDetail = () => {
       </div>
       ) : (
         <div>
-          Cotización emitida la fecha: {dayjs(request.fecha_atencion).format('D MMMM YYYY, HH:mm:ss')}
+          {/* Cotización emitida la fecha: {dayjs(request.fecha_atencion).format('D MMMM YYYY, HH:mm:ss')} */}
         </div>
       )}
     </div>
