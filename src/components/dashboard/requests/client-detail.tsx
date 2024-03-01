@@ -1,8 +1,17 @@
 import React from 'react'
 import { OptionalServiceQuotationRequest } from 'shared/quotation'
 import { DetailInfoParagraph } from './detail-row'
+import { Tag } from 'antd'
 
-export const ClientDetail: React.FC<OptionalServiceQuotationRequest> = ({ solicitante_correo, cliente, dni, direccion, id_cliente, medioDePago, telefono }) => {
+export const ClientDetail: React.FC<OptionalServiceQuotationRequest> = ({
+  solicitante_correo,
+  cliente,
+  dni,
+  direccion,
+  id_cliente,
+  medioDePago,
+  telefono
+}) => {
   const isClientRegistered = id_cliente ? 'Registrado' : 'No registrado'
 
   return (
@@ -16,6 +25,20 @@ export const ClientDetail: React.FC<OptionalServiceQuotationRequest> = ({ solici
       <DetailInfoParagraph label='Telefono:' info={telefono} />
       <DetailInfoParagraph label='Tipo de cliente:' info={isClientRegistered} />
       <DetailInfoParagraph label='Medio de Pago:' info={medioDePago} />
+      <span className='flex'>
+        Tipo de cliente:
+        <div className='ml-2'>
+          {id_cliente ? (
+            <Tag color='green'>
+              Registrado
+            </Tag>
+          ) : (
+            <Tag color='red'>
+              No registrado
+            </Tag>
+          )}
+        </div>
+      </span>
     </ul>
   )
 }

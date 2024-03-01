@@ -44,7 +44,7 @@ export const MyTasks = () => {
 
   return (
     <section className='grid grid-cols-2'>
-      <div className='p-7'>
+      <div className='p-7 bg-white z-[99]'>
         <div className='p-3'>
           <h2 className='text-2xl font-bold mb-3'>
             Mi Buzón
@@ -55,7 +55,7 @@ export const MyTasks = () => {
             onChange={handleDateRangeChange}
           />
         </div>
-        <div className='flex flex-col gap-2'>
+        <div className='flex flex-col gap-1'>
           {filteredRequests?.map((req) => (
             <TaskCard key={req.id} {...req} />
           ))}
