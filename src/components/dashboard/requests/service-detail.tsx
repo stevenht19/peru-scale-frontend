@@ -4,6 +4,7 @@ import { DetailInfoParagraph } from './detail-row'
 export const ServiceDetail: React.FC<OptionalServiceQuotationRequest> = ({
   descripcion_servicio,
   balanzaDescripcion,
+  capacidadBalanza,
   mensaje
 }) => {
   return (
@@ -12,6 +13,7 @@ export const ServiceDetail: React.FC<OptionalServiceQuotationRequest> = ({
       <ul className='flex flex-col gap-3'>
         <DetailInfoParagraph label='Tipo de Servicio:' info={descripcion_servicio} />
         <DetailInfoParagraph label='Modelo de balanza:' info={balanzaDescripcion} />
+        <DetailInfoParagraph label='Capacidad de balanza (KG):' info={capacidadBalanza} />
         <DetailInfoParagraph label='Descripcion del Servicio:' />
         <li className='max-w-[30rem]'>
           - {mensaje}

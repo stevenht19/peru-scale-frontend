@@ -28,12 +28,13 @@ export const TaskDetail = () => {
   }
 
   return (
-    <div className='border-l p-4 h-screen flex flex-col gap-3.5'>
+    <div className='border-l p-4 h-screen flex flex-col gap-3.5 animate-taskDetail'>
       {Boolean(!request.id_servicio && products?.length) && (
         <div className='my-4 flex flex-col'>
           <ProductsDetailsTable
             products={products}
-            enableEdition
+            disableTitle={true}
+            enableEdition={Boolean(request.id_cliente)}
             disabled={request.estado === QuotationRequestState.ATTENDED}
           />
         </div>

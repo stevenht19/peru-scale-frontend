@@ -1,12 +1,13 @@
 import { GetProductsQuotationRequest } from 'shared/quotation'
-import { Button, Image } from 'antd'
+import { Button, Image, Input, message } from 'antd'
 import { useBoolean } from 'hooks/use-boolean'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { ProductInput } from './product-input'
 import { editProductsPrice } from 'services/quotation'
 
 type ProductDetailsProps = {
   enableEdition?: boolean
+  disableTitle?: boolean
   disabled: boolean
   products: GetProductsQuotationRequest[]
 }
@@ -14,6 +15,7 @@ type ProductDetailsProps = {
 export const ProductsDetailsTable: React.FC<ProductDetailsProps> = ({
   products,
   disabled,
+  disableTitle,
   enableEdition
 }) => {
   const [isEditing, setEditionMode] = useBoolean()
@@ -38,7 +40,7 @@ export const ProductsDetailsTable: React.FC<ProductDetailsProps> = ({
             ...productValue
           }
         }
-        
+
         return product
       })
     })
@@ -46,14 +48,13 @@ export const ProductsDetailsTable: React.FC<ProductDetailsProps> = ({
 
   const handleSave = async () => {
     setEditionMode.off()
-    console.log(productsDetails)
     setIsSaving.on()
     await editProductsPrice(productsDetails.map(({ precio_unitario, id }) => ({ id, precio_unitario })) as any)
     setIsSaving.off()
   }
 
   return <>
-    {!enableEdition && <h3 className='font-semibold text-lg mt-8 mb-3'>Productos</h3>}
+    {!enableEdition && !disableTitle && <h3 className='font-semibold text-lg mt-8 mb-3'>Productos</h3>}
     <table>
       <thead>
         {
@@ -70,34 +71,44 @@ export const ProductsDetailsTable: React.FC<ProductDetailsProps> = ({
             </th>
           </>
         )}
+        {enableEdition && (
+          <>
+            <th>
+              Descuento
+            </th>
+          </>
+        )}
       </thead>
       <br />
       <tbody>
-        {productsDetails.map((product) => (
-          <tr>
-            {!enableEdition && (
-              <td>
-                <Image
-                  src={product!.imagen!}
-                  width={45}
-                  height={45}
-                  alt={product.nombre}
-                  className='mt-1'
+        {productsDetails.map((product, i) => (
+          <>
+            <tr>
+              {!enableEdition && (
+                <td>
+                  <Image
+                    src={product!.imagen!}
+                    width={45}
+                    height={45}
+                    alt={product.nombre}
+                    className='mt-1'
+                  />
+                </td>
+              )}
+              <td>{product.nombre}</td>
+              <td>{product.cantidad}</td>
+              {enableEdition && (
+                <ProductInput
+                  disabled={disabled}
+                  name='precio_unitario'
+                  value={(product.precio_unitario ?? product.precio)}
+                  handleEditProduct={handleEditProducts}
+                  id={product.id}
                 />
-              </td>
-            )}
-            <td>{product.nombre}</td>
-            <td>{product.cantidad}</td>
-            {enableEdition && (
-              <ProductInput
-                disabled={disabled}
-                name='precio_unitario'
-                value={(product.precio_unitario ?? product.precio)}
-                handleEditProduct={handleEditProducts}
-                id={product.id}
-              />
-            )}
-          </tr>
+              )}
+              <Discount value={(product.precio_unitario ?? product.precio)} id={product.id} name='precio_unitario' handleEditProducts={handleEditProducts} />
+            </tr>
+          </>
         ))}
       </tbody>
     </table>
@@ -107,4 +118,47 @@ export const ProductsDetailsTable: React.FC<ProductDetailsProps> = ({
       </Button>
     )}
   </>
+}
+
+
+const Discount = ({ id = 0, value = 0, name = '', handleEditProducts = (_a: any, _b: any) => {} }) => {
+  const [v, setV] = useState(0)
+
+  const price = useMemo(() => value, [])
+
+  const showToast = () => {
+    message.error('Descuento maximos hasta del 10%')
+  }
+
+  const onChange = (e: any) => {
+
+    if (Number(e.target.value) < 0) {
+      return
+    }
+
+    if (Number(e.target.value) > 10) {
+      showToast()
+      return
+    }
+
+    handleEditProducts({
+      [name]: price - (price / 100) * Number(e.target.value)
+    }, id)
+
+
+    setV(Number(e.target.value))
+  }
+
+  return (
+    <td>
+      <Input
+        addonAfter={'%'}
+        type='number'
+        style={{ width: 120 }}
+        max={10}
+        value={v}
+        onChange={onChange}
+      />
+    </td>
+  )
 }

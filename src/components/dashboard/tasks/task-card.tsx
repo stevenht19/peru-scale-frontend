@@ -17,7 +17,7 @@ const statusColor = {
 
 export const TaskCard = ({ cliente, empresa, fecha_registro, estado, id, id_servicio }: GetQuotationRequest) => {
   return (
-    <Link to={`${id}`}className='hover:bg-gray-50 rounded-md p-3'>
+    <Link to={`${id}`} className='hover:bg-gray-50 rounded-md p-3 overflow-hidden'>
       <div className='flex justify-between'>
         <div className='flex gap-2 text-sm bg-gray-100 w-fit px-2 py-0.5 rounded'>
           <Badge status={statusColor[estado] as BadgeProps['status']} />

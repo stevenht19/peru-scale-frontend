@@ -1,4 +1,5 @@
 import { Input } from 'antd'
+import { useMemo } from 'react'
 
 type ProductInputProps = {
   name: string
@@ -17,13 +18,15 @@ export const ProductInput: React.FC<ProductInputProps> = ({
 }) => {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (disabled) return
+
+    /*
     handleEditProduct({
-      [name]: +e.target.value
-    }, id)
+      [name]: Number(e.target.value)
+    }, id)*/
   }
 
   return (
-    <td>
+    <td className='relative'>
       <Input
         className='mb-1.5 w-36'
         name='precio_unitario'
