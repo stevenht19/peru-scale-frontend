@@ -31,6 +31,7 @@ import { TaskDetail } from 'pages/dashboard/tasks/[id]'
 
 import Quote_view from 'pages/quote view/quote_view'  
 import { quotationLoader } from 'pages/quote view/loader'
+import Welcome from 'pages/welcome/welcome'
 
 
 const router = createBrowserRouter([
@@ -102,6 +103,10 @@ const router = createBrowserRouter([
       </UserGuard>
     ),
     children: [
+      {
+        path: '',
+        element: <Welcome />
+      },
       {
         path: Routes.USER_ADMIN,
         element: (

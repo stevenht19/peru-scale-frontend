@@ -34,7 +34,9 @@ const RequestDetail = () => {
         <ServiceDetail {...request} />
       )}
       {Boolean(products.length) && (
-        <ProductsDetailsTable products={products} />
+        <ProductsDetailsTable
+          products={products}
+        />
       )}
       <RequestDetailFooter {...request as QuotationRequest} />
     </div>

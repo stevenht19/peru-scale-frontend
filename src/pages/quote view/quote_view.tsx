@@ -4,7 +4,7 @@ import {
 } from 'shared/quotation'
 import { PDFViewer, usePDF } from '@react-pdf/renderer'
 import { emitQuotation } from 'services/quotation'
-import { Button } from 'antd'
+import { Button, message } from 'antd'
 import { useLoaderData, useNavigate } from 'react-router-dom'
 import { useMemo } from 'react'
 import { QuotationServicePDF } from 'components/dashboard/quotation/service-quotation'
@@ -35,6 +35,7 @@ function quote_view() {
     formData.append('archivo', blob!, `${quotation.cliente}_${quotation.id_servicio ? 'servicio' : 'producto'}.pdf`)
     await emitQuotation(formData, quotation.id)
     setIsSending.off()
+    message.success('Cotización emitida correctamente')
     navigate(`${Routes.DASHBOARD}/${Routes.TASKS}`)
     
   }

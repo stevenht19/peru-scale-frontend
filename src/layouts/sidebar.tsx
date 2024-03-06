@@ -3,10 +3,14 @@ import { UserCard } from 'components/ui/user-card'
 import { ROLES } from 'consts/roles'
 import { Routes } from 'consts/routes'
 import { UserGuard } from 'hocs/user-guard'
+import { Link } from 'react-router-dom'
 
 export const Sidebar: React.FC = () => {
   return (
     <aside className='border-r h-screen sticky top-0 flex flex-col w-[16.5rem]'>
+      <Link to={Routes.DASHBOARD} className='my-1'>
+        <img src='/logo.png' alt='Logo de la empresa Peru Scale' width={205} height={46} />
+      </Link>
       <ul className='flex flex-col flex-1 p-2 gap-2'>
         <UserGuard role={[ROLES.ADMIN]} nullable>
           <NavLink to={`${Routes.DASHBOARD}/${Routes.USER_ADMIN}`}>
@@ -44,6 +48,6 @@ export function SolarNotificationLinesRemoveBold(props: React.SVGProps<SVGSVGEle
 
 export function FluentTaskListSquareRtl16Filled(props: React.SVGProps<SVGSVGElement>) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="1.6em" height="1.6em" viewBox="0 0 16 16" {...props}><path fill="#aba9a9"  d="M2 4.5A2.5 2.5 0 0 1 4.5 2h7A2.5 2.5 0 0 1 14 4.5v7a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 2 11.5zm2.25 6a.5.5 0 0 0 .5.5H7a.5.5 0 0 0 0-1H4.75a.5.5 0 0 0-.5.5m.5-4.5a.5.5 0 0 0 0 1H7a.5.5 0 0 0 0-1zm6.852 3.146a.5.5 0 0 0-.707 0l-1.147 1.147l-.394-.395a.5.5 0 0 0-.708.707l.748.749a.5.5 0 0 0 .708 0l1.5-1.5a.5.5 0 0 0 0-.708m0-3.292a.5.5 0 1 0-.707-.708L9.748 6.293l-.394-.395a.5.5 0 1 0-.708.708l.748.748a.5.5 0 0 0 .708 0z"></path></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="1.6em" height="1.6em" viewBox="0 0 16 16" {...props}><path fill="#aba9a9" d="M2 4.5A2.5 2.5 0 0 1 4.5 2h7A2.5 2.5 0 0 1 14 4.5v7a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 2 11.5zm2.25 6a.5.5 0 0 0 .5.5H7a.5.5 0 0 0 0-1H4.75a.5.5 0 0 0-.5.5m.5-4.5a.5.5 0 0 0 0 1H7a.5.5 0 0 0 0-1zm6.852 3.146a.5.5 0 0 0-.707 0l-1.147 1.147l-.394-.395a.5.5 0 0 0-.708.707l.748.749a.5.5 0 0 0 .708 0l1.5-1.5a.5.5 0 0 0 0-.708m0-3.292a.5.5 0 1 0-.707-.708L9.748 6.293l-.394-.395a.5.5 0 1 0-.708.708l.748.748a.5.5 0 0 0 .708 0z"></path></svg>
   )
 }
