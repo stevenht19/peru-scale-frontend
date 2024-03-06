@@ -4,11 +4,12 @@ import { useBoolean } from 'hooks/use-boolean'
 import { useMemo, useState } from 'react'
 import { ProductInput } from './product-input'
 import { editProductsPrice } from 'services/quotation'
+import { ProductDiscount } from './product-discount'
 
 type ProductDetailsProps = {
   enableEdition?: boolean
   disableTitle?: boolean
-  disabled: boolean
+  disabled?: boolean
   products: GetProductsQuotationRequest[]
 }
 
@@ -49,8 +50,13 @@ export const ProductsDetailsTable: React.FC<ProductDetailsProps> = ({
   const handleSave = async () => {
     setEditionMode.off()
     setIsSaving.on()
-    await editProductsPrice(productsDetails.map(({ precio_unitario, id }) => ({ id, precio_unitario })) as any)
+    await editProductsPrice(productsDetails.map(({ precio_unitario, id, descuentos }) => ({
+      id,
+      precio_unitario,
+      ...descuentos && { descuentos }
+    })) as any)
     setIsSaving.off()
+    message.success('Descuento aplicado correctamente')
   }
 
   return <>
@@ -97,16 +103,17 @@ export const ProductsDetailsTable: React.FC<ProductDetailsProps> = ({
               )}
               <td>{product.nombre}</td>
               <td>{product.cantidad}</td>
+              <td>S/. {(product.precio_unitario ?? product.precio)}</td>
               {enableEdition && (
-                <ProductInput
-                  disabled={disabled}
-                  name='precio_unitario'
-                  value={(product.precio_unitario ?? product.precio)}
-                  handleEditProduct={handleEditProducts}
+                <ProductDiscount
                   id={product.id}
+                  name='precio_unitario'
+                  handleEditProducts={handleEditProducts}
+                  quantity={product.cantidad}
+                  listPrice={Number(product.precio)}
+                  discount={product.descuentos ?? undefined}
                 />
               )}
-              <Discount value={(product.precio_unitario ?? product.precio)} id={product.id} name='precio_unitario' handleEditProducts={handleEditProducts} />
             </tr>
           </>
         ))}
@@ -118,47 +125,4 @@ export const ProductsDetailsTable: React.FC<ProductDetailsProps> = ({
       </Button>
     )}
   </>
-}
-
-
-const Discount = ({ id = 0, value = 0, name = '', handleEditProducts = (_a: any, _b: any) => {} }) => {
-  const [v, setV] = useState(0)
-
-  const price = useMemo(() => value, [])
-
-  const showToast = () => {
-    message.error('Descuento maximos hasta del 10%')
-  }
-
-  const onChange = (e: any) => {
-
-    if (Number(e.target.value) < 0) {
-      return
-    }
-
-    if (Number(e.target.value) > 10) {
-      showToast()
-      return
-    }
-
-    handleEditProducts({
-      [name]: price - (price / 100) * Number(e.target.value)
-    }, id)
-
-
-    setV(Number(e.target.value))
-  }
-
-  return (
-    <td>
-      <Input
-        addonAfter={'%'}
-        type='number'
-        style={{ width: 120 }}
-        max={10}
-        value={v}
-        onChange={onChange}
-      />
-    </td>
-  )
 }

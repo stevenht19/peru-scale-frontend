@@ -12,6 +12,7 @@ export interface QuotationRequest {
   cliente: string
   direccion: string
   telefono: string
+  correo: string
   solicitante_correo: string
   dni: string
   id_servicio: number | null

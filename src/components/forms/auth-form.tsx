@@ -12,12 +12,14 @@ type AuthClientProps = {
 
 export function AuthClientForm({ children, title, linkText, linkMessage, linkPath }: AuthClientProps) {
   return (
-    <div className='max-w-[34rem] mx-auto mt-7 p-2'>
-      <h2 className='text-3xl font-bold'>{title}</h2>
-      <p className='mt-2 whitespace-pre-line'>
-        {linkMessage} <Link to={linkPath} className='text-blue-500 underline'>{linkText}</Link>
-      </p>
-      {children}
+    <div className='flex'>
+      <div className='max-w-[36rem] w-full mx-auto px-10 pt-7'>
+        <h2 className='text-3xl font-bold'>{title}</h2>
+        <p className='mt-2 whitespace-pre-line'>
+          {linkMessage} <Link to={linkPath} className='text-blue-500 underline'>{linkText}</Link>
+        </p>
+        {children}
+      </div>
     </div>
   )
 }

@@ -16,6 +16,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           src={product.imagen || "/assets/imagen_articulo_por_defecto.jpg"}
           className='object-cover w-full'
           alt={product.nombre}
+          height={500}
         />
       </div>
       <div className='px-4 flex flex-col'>
