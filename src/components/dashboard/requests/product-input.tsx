@@ -1,5 +1,4 @@
 import { Input } from 'antd'
-import { useMemo } from 'react'
 
 type ProductInputProps = {
   name: string
@@ -11,12 +10,9 @@ type ProductInputProps = {
 
 export const ProductInput: React.FC<ProductInputProps> = ({
   value,
-  id,
-  name,
   disabled,
-  handleEditProduct
 }) => {
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = () => {
     if (disabled) return
 
     /*

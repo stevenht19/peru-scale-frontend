@@ -1,4 +1,3 @@
-import { EyeOutlined } from '@ant-design/icons'
 import { Tag } from 'antd'
 import { useSession } from 'hooks/use-session'
 

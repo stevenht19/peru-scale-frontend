@@ -1,8 +1,7 @@
 import { GetProductsQuotationRequest } from 'shared/quotation'
-import { Button, Image, Input, message } from 'antd'
+import { Button, Image, message } from 'antd'
 import { useBoolean } from 'hooks/use-boolean'
-import { useMemo, useState } from 'react'
-import { ProductInput } from './product-input'
+import { useState } from 'react'
 import { editProductsPrice } from 'services/quotation'
 import { ProductDiscount } from './product-discount'
 
@@ -87,7 +86,7 @@ export const ProductsDetailsTable: React.FC<ProductDetailsProps> = ({
       </thead>
       <br />
       <tbody>
-        {productsDetails.map((product, i) => (
+        {productsDetails.map((product) => (
           <>
             <tr>
               {!enableEdition && (
