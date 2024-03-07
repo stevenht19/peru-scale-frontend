@@ -8,7 +8,6 @@ import { useError } from 'hooks/use-error'
 import { ErrorText } from 'components/ui/error'
 
 export const CrendentialsForm = ({
-  onNext,
   onSubmit,
   children,
   submitText,
@@ -19,13 +18,7 @@ export const CrendentialsForm = ({
   const [submitting, setIsSubmitting] = useBoolean()
 
   const onFinish = async (values: UserCredentials) => {
-    if (onNext) {
-      onNext(values)
-      return
-    }
-
     setIsSubmitting.on()
-
     onSubmit && await onSubmit(values)
       .then(() => {
         resetError()
@@ -119,7 +112,7 @@ export const CrendentialsForm = ({
         className='w-full mt-4'
         htmlType='submit'
       >
-        {submitText ?? 'Iniciar Sesión'}
+        {submitting ? 'Ingresando...' : (submitText ?? 'Iniciar Sesión')}
       </Button>
       {isError && (
         <ErrorText>

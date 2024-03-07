@@ -33,7 +33,7 @@ const Products = () => {
         ?.idcategoria
 
       if (!categoryId) {
-        axios.get('http://localhost:3000/productos')
+        axios.get(`${import.meta.env.VITE_API_URL}/productos`)
           .then((response) => {
             setProducts(response.data)
             setLoading(false)
@@ -44,7 +44,7 @@ const Products = () => {
           })
       } else {
         axios
-          .get(`http://localhost:3000/categorias/${categoryId}/productos`)
+          .get(`${import.meta.env.VITE_API_URL}/categorias/${categoryId}/productos`)
           .then(({ data }) => {
             setProducts(data)
             setLoading(false)
