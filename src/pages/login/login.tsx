@@ -11,7 +11,7 @@ export default function Login() {
   const { error, isError, handleErrorMsg } = useError()
 
   const onSubmit = async (crendetials: UserCredentials) => {
-    auth.login(crendetials)
+    await auth.login(crendetials)
       .then((res) => {
         if (!res.message) {
           if (res.user.id_rol !== ROLESID.CLIENT) {

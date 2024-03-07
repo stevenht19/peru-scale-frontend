@@ -35,14 +35,6 @@ export function Header() {
 
   const employeeItems: MenuProps['items'] = [
     {
-      key: (user?.nombre_rol !== ROLES.CLIENT) ? 0 : 1,
-      label: (
-        <Link to={Routes.EDITACCOUNT}>
-          Mi Cuenta
-        </Link>
-      ),
-    },
-    {
       key: (user?.nombre_rol !== ROLES.CLIENT) ? 2 : 0,
       label: (
         <Link to={Routes.DASHBOARD}>
