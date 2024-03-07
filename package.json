@@ -18,10 +18,8 @@
     "dayjs": "^1.11.10",
     "jsonwebtoken": "^9.0.2",
     "react": "^18.2.0",
-    "react-currency-format": "^1.1.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.1",
-    "react-imask": "^7.3.0",
     "react-router-dom": "^6.21.3",
     "swr": "^2.2.4"
   },
