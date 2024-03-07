@@ -79,7 +79,11 @@ export const columns = ({ onEditUser, roles }: ColumnsProps): ColumnsType<GetUse
     key: 5,
     width: 240,
     render(date) {
+     if(date){
       return dayjs(date).format('D MMMM YYYY, HH:mm:ss')
+     } else{
+      return '-';
+     }
     }
   },
   {
