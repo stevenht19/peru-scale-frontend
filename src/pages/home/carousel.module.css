@@ -1,0 +1,12 @@
+@keyframes resetYPosition {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  } 
+}
+
+.carousel_title {
+  opacity: 0;
+  transform: translateY(2rem);
+  animation: resetYPosition .5s ease forwards;
+}
